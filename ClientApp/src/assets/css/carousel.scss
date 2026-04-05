@@ -1,0 +1,97 @@
+.carousel-wrapper {
+  position: relative;
+}
+
+.carousel-scroll {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+}
+
+.carousel-scroll::-webkit-scrollbar {
+  display: none;
+  /* Chrome/Safari */
+}
+
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  color: #6750A4;
+}
+
+.carousel-nav-btn:hover {
+  background: #6750A4;
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(103, 80, 164, 0.3);
+}
+
+.carousel-nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-nav-left {
+  left: -16px;
+}
+
+.carousel-nav-right {
+  right: -16px;
+}
+
+.card-item {
+  min-width: 150px;
+  max-width: 185px;
+  flex-shrink: 0;
+}
+
+/* Optional: Gradient fade effect on edges */
+.carousel-wrapper::before,
+.carousel-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.3s;
+}
+
+// .carousel-wrapper::before {
+//   left: 0;
+//   background: linear-gradient(to right, white, transparent);
+//   opacity: 0;
+// }
+
+// .carousel-wrapper::after {
+//   right: 0;
+//   background: linear-gradient(to left, white, transparent);
+//   opacity: 0;
+// }
+
+.carousel-wrapper:hover::before {
+  opacity: 1;
+}
+
+.carousel-wrapper:hover::after {
+  opacity: 1;
+}

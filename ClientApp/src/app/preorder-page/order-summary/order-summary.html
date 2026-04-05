@@ -1,0 +1,317 @@
+<div
+  class="order-footer container d-flex flex-wrap justify-content-between align-items-center p-6 my-3 rounded-20 gap-4"
+>
+  <div class="order-info d-flex flex-column text-start gap-3">
+    <div class="d-flex align-items-center justify-content-start gap-4">
+      <h4 class="text-secondary">Total</h4>
+      <h4 class="fw-semibold text-tertiary">{{ itemsService.total() }} KWD</h4>
+    </div>
+
+    @if (errorMessage()) {
+      <p class="text-danger fs-14 m-0">{{ errorMessage() }}</p>
+    }
+  </div>
+
+  <div class="order-actions d-flex gap-3">
+    <!-- Cancel Order -->
+    <button
+      class="btn btn-cancel-order"
+      data-bs-toggle="modal"
+      data-bs-target="#cancelModal"
+      [disabled]="isSubmitting()"
+    >
+      Cancel Order
+    </button>
+
+    <!-- ── Conditional primary action button ── -->
+    @if (hasNewItems()) {
+      <!-- NEW ITEMS present → Proceed to Payment -->
+      <button
+        class="btn btn-proceed-payment"
+        (click)="openPaymentModal()"
+        [disabled]="isSubmitting() || itemsService.selectedItems().length === 0"
+      >
+        @if (isSubmitting()) {
+          <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+        }
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="me-1">
+          <rect x="2" y="5" width="20" height="14" rx="3" stroke="currentColor" stroke-width="2"/>
+          <path d="M2 10h20" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        Proceed to Payment
+      </button>
+    } @else {
+      <!-- Pre-order only → Confirm Delivery -->
+      <button
+        class="btn btn-confirm-delivery"
+        data-bs-toggle="modal"
+        data-bs-target="#warningModal"
+        (click)="onCompleteOrder()"
+        [disabled]="isSubmitting() || itemsService.selectedItems().length === 0"
+      >
+        @if (isSubmitting()) {
+          <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+        }
+        Confirm Delivery
+      </button>
+    }
+  </div>
+</div>
+
+<!-- ══ Payment Modal ════════════════════════════════════════════════════════ -->
+@if (showPaymentModal()) {
+  <div class="payment-backdrop" (click)="onPaymentBackdropClick($event)">
+    <div class="payment-modal" role="dialog" aria-modal="true" aria-label="Payment">
+
+      <!-- Header -->
+      <div class="payment-modal__header">
+        <div>
+          <h2 class="payment-modal__title">Payment</h2>
+          <p class="payment-modal__subtitle">Select payment method(s) and enter amount</p>
+        </div>
+        <button class="payment-modal__close" (click)="closePaymentModal()" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="payment-modal__body">
+
+        <!-- Order total summary strip -->
+        <!-- <div class="payment-total-strip">
+          <span class="payment-total-strip__label">Order Total</span>
+          <span class="payment-total-strip__value">{{ itemsService.total() | number:'1.3-3' }} KD</span>
+        </div> -->
+
+        <!-- Payment methods (multi-select)
+        <div class="payment-methods">
+          <p class="payment-methods__heading">Payment Method</p>
+          <div class="payment-methods__grid">
+
+            <button
+              class="payment-method-card"
+              [class.payment-method-card--selected]="isMethodSelected('cash')"
+              (click)="toggleMethod('cash')"
+              type="button">
+              <div class="payment-method-card__icon payment-method-card__icon--cash">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                  <rect x="2" y="7" width="20" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                  <circle cx="12" cy="13.5" r="2.5" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M6 7V6a3 3 0 013-3h6a3 3 0 013 3v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <span class="payment-method-card__label">Cash</span>
+              @if (isMethodSelected('cash')) {
+                <span class="payment-method-card__check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              }
+            </button>
+
+            <button
+              class="payment-method-card"
+              [class.payment-method-card--selected]="isMethodSelected('knet')"
+              (click)="toggleMethod('knet')"
+              type="button">
+              <div class="payment-method-card__icon payment-method-card__icon--knet">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                  <rect x="2" y="5" width="20" height="14" rx="3" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M2 10h20" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M6 15h4M14 15h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <span class="payment-method-card__label">KNET</span>
+              @if (isMethodSelected('knet')) {
+                <span class="payment-method-card__check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              }
+            </button>
+
+            <button
+              class="payment-method-card"
+              [class.payment-method-card--selected]="isMethodSelected('wallet')"
+              (click)="toggleMethod('wallet')"
+              type="button">
+              <div class="payment-method-card__icon payment-method-card__icon--wallet">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 7H3a1 1 0 00-1 1v11a1 1 0 001 1h18a1 1 0 001-1V8a1 1 0 00-1-1z" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M16 3H5a2 2 0 00-2 2v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <circle cx="17" cy="13" r="1.5" fill="currentColor"/>
+                </svg>
+              </div>
+              <span class="payment-method-card__label">Student Wallet</span>
+              @if (isMethodSelected('wallet')) {
+                <span class="payment-method-card__check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              }
+            </button>
+
+          </div>
+        </div> -->
+
+        <!-- Amount input(s) — shown per selected method -->
+        <!-- @if (selectedMethods().length > 0) { -->
+          <div class="payment-amounts">
+            <p class="payment-amounts__heading">Enter Amount</p>
+            <div class="payment-amounts__fields">
+
+              <!-- @if (isMethodSelected('cash')) { -->
+                <div class="amount-field">
+                  <label class="amount-field__label">
+                    <span class="amount-field__method-dot amount-field__method-dot--cash"></span>
+                    Cash
+                  </label>
+                  <div class="amount-field__input-wrap">
+                    <input
+                      type="number"
+                      class="amount-field__input"
+                      placeholder="0.000"
+                      min="0"
+                      step="0.001"
+                      [value]="paymentAmounts()['cash'] ?? ''"
+                      (input)="onAmountChange('cash', $any($event.target).value)"
+                    />
+                    <span class="amount-field__currency">KD</span>
+                  </div>
+                </div>
+              <!-- } -->
+
+              <!-- @if (isMethodSelected('knet')) { -->
+                <div class="amount-field">
+                  <label class="amount-field__label">
+                    <span class="amount-field__method-dot amount-field__method-dot--knet"></span>
+                    KNET
+                  </label>
+                  <div class="amount-field__input-wrap">
+                    <input
+                      type="number"
+                      class="amount-field__input"
+                      placeholder="0.000"
+                      min="0"
+                      step="0.001"
+                      [value]="paymentAmounts()['knet'] ?? ''"
+                      (input)="onAmountChange('knet', $any($event.target).value)"
+                    />
+                    <span class="amount-field__currency">KD</span>
+                  </div>
+                </div>
+              <!-- } -->
+
+              <!-- @if (isMethodSelected('wallet')) { -->
+                <div class="amount-field">
+                  <label class="amount-field__label">
+                    <span class="amount-field__method-dot amount-field__method-dot--wallet"></span>
+                    Student Wallet
+                  </label>
+                  <div class="amount-field__input-wrap">
+                    <input
+                      type="number"
+                      class="amount-field__input"
+                      placeholder="0.000"
+                      min="0"
+                      step="0.001"
+                      [value]="paymentAmounts()['wallet'] ?? ''"
+                      (input)="onAmountChange('wallet', $any($event.target).value)"
+                    />
+                    <span class="amount-field__currency">KD</span>
+                  </div>
+                </div>
+              <!-- } -->
+
+            </div>
+
+            <!-- Running total of entered amounts vs order total -->
+            <div class="payment-reconcile" [class.payment-reconcile--ok]="isAmountMatched()" [class.payment-reconcile--over]="isAmountOver()">
+              <span>Entered</span>
+              <span class="payment-reconcile__entered">{{ enteredTotal() | number:'1.3-3' }} KD</span>
+              <span class="payment-reconcile__sep">/</span>
+              <span>Required</span>
+              <span class="payment-reconcile__required">{{ itemsService.total() | number:'1.3-3' }} KD</span>
+              @if (isAmountMatched()) {
+                <span class="payment-reconcile__badge payment-reconcile__badge--ok">✓ Exact</span>
+              }
+              @if (isAmountOver()) {
+                <span class="payment-reconcile__badge payment-reconcile__badge--over">Over by {{ (enteredTotal() - itemsService.total()) | number:'1.3-3' }} KD</span>
+              }
+            </div>
+
+            @if (paymentValidationError()) {
+              <p class="payment-error-msg">{{ paymentValidationError() }}</p>
+            }
+
+          </div>
+        <!-- } -->
+
+      </div>
+
+      <!-- Footer -->
+      <div class="payment-modal__footer">
+        <button class="payment-btn-cancel" (click)="closePaymentModal()" type="button">
+          Back
+        </button>
+        <button
+          class="payment-btn-confirm"
+          (click)="onConfirmPayment()"
+          [disabled]="isSubmitting() || enteredTotal() <= 0"
+          type="button">
+          @if (isSubmitting()) {
+            <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+          }
+          Confirm Payment
+        </button>
+      </div>
+
+    </div>
+  </div>
+}
+
+<!-- ══ Success Modal (Bootstrap) ════════════════════════════════════════════ -->
+<div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg p-3rem rounded-8">
+      <div class="modal-body text-center p-4 gap-4 d-flex flex-column align-items-center">
+        <svg width="81" height="81" viewBox="0 0 81 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40.5001 81.0001C62.8676 81.0001 81.0001 62.8676 81.0001 40.5001C81.0001 18.1325 62.8676 0 40.5001 0C18.1325 0 0 18.1325 0 40.5001C0 62.8676 18.1325 81.0001 40.5001 81.0001Z" fill="#14AE5C"/>
+          <path d="M36.4841 55.9502C35.573 55.9517 34.6861 55.6568 33.9572 55.1102L33.9137 55.0762L24.3956 47.7953C23.5145 47.1096 22.9403 46.1033 22.7981 44.9959C22.6559 43.8885 22.9574 42.7698 23.6367 41.8837C24.316 40.9977 25.318 40.4161 26.4244 40.2659C27.5307 40.1156 28.6516 40.4089 29.5426 41.0817L35.7077 45.8096L50.276 26.8036C50.6136 26.3627 51.0347 25.9926 51.5154 25.7145C51.996 25.4364 52.5268 25.2558 53.0773 25.183C53.6278 25.1102 54.1873 25.1465 54.7237 25.2901C55.2602 25.4336 55.7631 25.6814 56.2037 26.0194L56.1135 26.1449L56.2063 26.0194C57.0956 26.7023 57.6777 27.7101 57.8247 28.8217C57.9717 29.9333 57.6717 31.0578 56.9905 31.9484L39.8549 54.2938C39.4584 54.8086 38.9487 55.2252 38.3653 55.5112C37.7819 55.7973 37.1404 55.9451 36.4906 55.9432L36.4841 55.9502Z" fill="white"/>
+        </svg>
+        <h1 id="warningModalLabel" class="fw-bold mb-2">All Items Delivered Successfully</h1>
+        <h2 class="lh-sm text-muted mb-0">Order completed successfully, Ready for next scan</h2>
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <button class="btn btn-confirm-delivery w-50 p-4" data-bs-dismiss="modal">Finish Order</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Cancel Confirmation Modal (Bootstrap) ════════════════════════════════ -->
+<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg p-3rem rounded-8">
+      <div class="modal-body text-center p-4 gap-4 d-flex flex-column align-items-center">
+        <h1 id="cancelModalLabel" class="fw-bold mb-2">Are you sure you want to cancel order?</h1>
+        <p class="text-secondary">No items will be charged.</p>
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <button class="btn btn-outline-secondary me-3" data-bs-dismiss="modal">Go back</button>
+        <button
+          class="btn btn-danger p-4"
+          data-bs-dismiss="modal"
+          (click)="itemsService.resetSession()"
+        >
+          Yes, Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

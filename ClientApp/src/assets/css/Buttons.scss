@@ -1,0 +1,60 @@
+﻿/* =======================
+   Base Button Styles
+======================= */
+.btn {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0.7rem !important; /* p-2 */
+    gap: 0.625rem !important; /* gap-2-5 */
+    border-radius: 50rem !important; /* rounded-pill */
+    border: 0 !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: transform 0.2s !important;
+}
+
+    .btn:hover {
+        transform: translateY(-2px) !important;
+    }
+
+/* =======================
+   Unique Button Backgrounds
+======================= */
+
+/* New Item Button */
+.btn-new-item {
+    background-color: #7D5260 !important;
+    color: var(--light) !important; /* text-light */
+}
+
+/* Confirm Delivery Button */
+.btn-confirm-delivery {
+    background-color: #6750A4 !important;
+    color: var(--light) !important; /* text-light */
+}
+
+/* Cancel Order Button */
+.btn-cancel-order {
+    color: #6750A4 !important;
+    padding: 12px 24px !important;
+}
+.btn-cancel-order:hover{
+    background-color: var(--danger);
+    color: #fff !important;
+}
+
+.btn-cross {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border:none;
+}
+
+.selection-cross-btn{
+        position: absolute;
+    top: -11px;
+    right: -11px;
+    cursor: pointer;
+}

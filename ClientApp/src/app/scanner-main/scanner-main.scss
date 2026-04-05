@@ -1,0 +1,12 @@
+    #ScannerBox_Main {
+        color: #6c757d;
+        min-height: 30rem;
+        border: 3px dashed #D4D4D4;
+        background: linear-gradient(180deg, var(--Color, #FFF) 0%, #EFEFEF 100%);
+    }
+
+        #ScannerBox_Main .scanner-icon {
+            width: 80px;
+            height: 80px;
+            background: rgb(230 230 230) !important;
+        }

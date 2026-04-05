@@ -1,0 +1,75 @@
+// ─── Pre-order carousel card states ─────────────────────────────────────────
+
+.card-item {
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        opacity 0.15s ease;
+    min-width: 130px;
+    cursor: pointer;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    // Partially selected — subtle purple tint
+    &--selected {
+        background-color: #f3effd !important;
+        box-shadow: 0 0 0 2px #6750a430;
+    }
+
+    // Fully selected — green tint + stronger ring
+    &--fully-selected {
+        background-color: #edfbf3 !important;
+        box-shadow: 0 0 0 2.5px #14ae5c80;
+        opacity: 0.9;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+// ─── Checkmark badge (top-right corner when fully selected) ──────────────────
+
+.preorder-check-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+// ─── Partial selection dot ────────────────────────────────────────────────────
+
+.preorder-partial-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #6750a4;
+    pointer-events: none;
+}
+
+// ─── "X left" remaining quantity pill ────────────────────────────────────────
+
+.badge-remaining {
+    display: inline-block;
+    padding: 1px 10px;
+    border-radius: 25%;
+    background-color: rgb(0 0 0 / 16%);
+    color: #010002;
+    font-weight: 600;
+    white-space: nowrap;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}

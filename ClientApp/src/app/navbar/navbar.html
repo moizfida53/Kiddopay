@@ -1,0 +1,37 @@
+<header>
+  <nav class=" container navbar p-3  border-bottom box-shadow mb-3 m-auto">
+    <div class="container-fluid">
+
+      <!-- Logo + Brand -->
+      <a [routerLink]="['/']" class="d-flex align-items-center justify-content-center gap-2 text-decoration-none">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="8" fill="#6750A4" />
+          <rect x="4" y="8" width="32" height="24" fill="url(#pattern0)" />
+          <defs>
+            <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+              <use xlink:href="#image0" transform="matrix(0.03125 0 0 0.0416667 0 -0.0595795)" />
+            </pattern>
+            <image id="image0" href="assets/Images/Logo2.png" />
+          </defs>
+        </svg>
+        <h3 class="navbar-brand m-0">Kiddopay</h3>
+      </a>
+
+      <!-- User Info -->
+      <div class="d-flex flex-row justify-content-end align-items-center ms-auto">
+        <div class="user-logo">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
+            <path d="M9.62665 8.60509C9.54748 8.59717 9.45248 8.59717 9.3654 8.60509C7.48124 8.54176 5.98499 6.99801 5.98499 5.09801C5.98499 3.15842 7.55249 1.58301 9.49998 1.58301C11.4396 1.58301 13.015 3.15842 13.015 5.09801C13.0071 6.99801 11.5108 8.54176 9.62665 8.60509Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M5.66832 11.527C3.75249 12.8095 3.75249 14.8995 5.66832 16.1741C7.8454 17.6307 11.4158 17.6307 13.5929 16.1741C15.5087 14.8916 15.5087 12.8016 13.5929 11.527C11.4237 10.0782 7.85332 10.0782 5.66832 11.527Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+
+        <div class="d-flex flex-column mx-3 text-start">
+          <h3>{{ username }}</h3>
+          <h2 class="opacity-75 m-0">{{ role }}</h2>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,77 @@
+// new-order-items.component.scss
+
+// ─── Empty state ──────────────────────────────────────────────────────────────
+
+.new-order-empty {
+  background-color: #fafafa;
+  border: 1.5px dashed #d9d9d9;
+  color: #8c8c8c;
+}
+
+// ─── Inline clickable text link in empty state ────────────────────────────────
+
+.btn-link-inline {
+  border: none;
+  background: none;
+  padding: 0;
+  color: #6750a4;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: inherit;
+
+  &:hover {
+    color: darken(#6750a4, 10%);
+  }
+}
+
+// ─── "Add Item" button (top-right of section header) ─────────────────────────
+
+.btn-add-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1.5px solid #6750a4;
+  border-radius: 10px;
+  background: #f3effd;
+  color: #6750a4;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.1s ease,
+    box-shadow 0.15s ease;
+  white-space: nowrap;
+
+  svg {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover {
+    background: #6750a4;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(103, 80, 164, 0.28);
+
+    svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+}
+    .selected-item-image {
+       width: 50%;
+    height: 100%;
+    }
+
+    #item-box {
+        height: 130px;
+    }

@@ -1,0 +1,37 @@
+<div class="container-xxl pt-4">
+  <div class="row g-4 align-items-start">
+
+    <!-- ── Left Column ─────────────────────────────────────────────────── -->
+    <div class="col-lg-4 col-md-4 col-12 mt-4">
+
+      <!-- Student profile card (name, grade, daily limit) -->
+      <app-student-card></app-student-card>
+
+      <!-- Pre-order carousel — only when student has an active pre-order -->
+      @if (hasActivePreOrder) {
+        <app-preorder></app-preorder>
+      }
+    </div>
+
+    <!-- ── Right Column ────────────────────────────────────────────────── -->
+    <div class="col-lg-8 col-md-8 col-12 mt-0">
+
+      <!--
+        Panel 1 — Pre-order items
+        Shows "please select your pre-order" prompt when nothing is selected yet.
+      -->
+      <app-scanned-items></app-scanned-items>
+
+      <!--
+        Panel 2 — New / freshly-scanned items
+        Shows an empty-state prompt when no barcode has been scanned yet.
+      -->
+      <app-new-order-items></app-new-order-items>
+
+      <!-- Total + Confirm / Cancel actions -->
+      <app-order-summary></app-order-summary>
+
+    </div>
+
+  </div>
+</div>

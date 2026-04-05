@@ -1,0 +1,271 @@
+<!-- ── Modal Backdrop ─────────────────────────────────────────────────────── -->
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="catalog-modal" role="dialog" aria-modal="true" aria-label="Add items to order">
+
+    <!-- ══ Modal Header ══════════════════════════════════════════════════════ -->
+    <div class="catalog-modal__header">
+      <div class="d-flex align-items-center gap-3">
+        <h2 class="catalog-modal__title">Add new items</h2>
+      </div>
+
+      <div class="d-flex align-items-center gap-3">
+        <!-- Final amount badge -->
+        <!-- @if (itemsService.newOrderCartItems().length > 0) {
+          <div class="header-amount-badge">
+            <span class="header-amount-badge__label">Final Amount</span>
+            <span class="header-amount-badge__value">{{ itemsService.newOrderTotal() | number:'1.3-3' }} KD</span>
+          </div>
+        } -->
+
+        <button class="catalog-modal__close" (click)="close()" aria-label="Close modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ══ Modal Body ═════════════════════════════════════════════════════════ -->
+    <div class="catalog-modal__body">
+
+      <!-- ── Scanned Items Panel (LEFT) ────────────────────────────────────── -->
+      <aside class="scanned-panel">
+        <!-- <h3 class="scanned-panel__title">Scanned Items</h3> -->
+
+        <div class="scanned-panel__list">
+          @if (itemsService.newOrderCartItems().length === 0) {
+            <div class="scanned-panel__empty">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="#c9a87c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="3" y1="6" x2="21" y2="6" stroke="#c9a87c" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <p>No items added yet</p>
+            </div>
+          }
+
+          @for (item of itemsService.newOrderCartItems(); track item.productId) {
+            <div class="scanned-item">
+              <!-- <div class="scanned-item__img-wrap">
+                @if (item.imageUrl) {
+                  <img [src]="item.imageUrl" [alt]="item.productName" class="scanned-item__img" />
+                } @else {
+                  <div class="scanned-item__img-placeholder">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <rect x="3" y="3" width="18" height="18" rx="3" stroke="#c9a87c" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                }
+              </div> -->
+
+              <div class="scanned-item__info">
+                <span class="scanned-item__name">{{ item.productName | titlecase }}</span>
+                <span class="scanned-item__price">{{ item.lineTotal | number:'1.3-3' }} KD</span>
+              </div>
+
+              <div class="scanned-item__controls">
+                <button
+                  class="qty-btn qty-btn--minus"
+                  (click)="decreaseQty(item.productId)"
+                  aria-label="Decrease quantity">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                  </svg>
+                </button>
+                <span class="qty-value">{{ item.quantity }}</span>
+                <button
+                  class="qty-btn qty-btn--plus"
+                  (click)="increaseQty(item.productId)"
+                  aria-label="Increase quantity">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="scanned-item__divider"></div>
+          }
+        </div>
+
+        <!-- Total + Action Buttons -->
+        <div class="scanned-panel__footer">
+          <div class="scanned-panel__total">
+            <span class="scanned-panel__total-label">Total</span>
+            <span class="scanned-panel__total-value">{{ itemsService.newOrderTotal() | number:'1.3-3' }} KD</span>
+          </div>
+
+          <div class="scanned-panel__actions">
+            <button
+              class="btn-cancel-order"
+              (click)="cancelOrder()"
+              [disabled]="itemsService.newOrderCartItems().length === 0">
+              Cancel Order
+            </button>
+            <button
+              class="btn-confirm-order"
+              (click)="confirmOrder()"
+              [disabled]="itemsService.newOrderCartItems().length === 0">
+              Confirm Order
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ── Product Panel (CENTER) ────────────────────────────────────────── -->
+      <section class="product-panel">
+
+        <!-- Empty state — no category chosen yet -->
+        @if (!selectedCategory()) {
+          <div class="product-panel__empty">
+            <div class="empty-illustration">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                <path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" stroke="#c9a87c" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" stroke="#c9a87c" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="12" cy="14" r="2" stroke="#c9a87c" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <h3 class="empty-title">Select a category</h3>
+            <p class="empty-desc">Choose a category from the right to browse products</p>
+          </div>
+        }
+
+        @if (selectedCategory()) {
+          <!-- Category heading above grid -->
+          <div class="product-panel__category-header">
+            <!-- <h3 class="product-panel__category-name">{{ selectedCategory()?.categoryName }}</h3> -->
+          </div>
+
+          <!-- Loading shimmer -->
+          @if (catalogService.productsLoading()) {
+            <div class="product-grid">
+              @for (i of [1,2,3,4,5,6,7,8]; track i) {
+                <div class="product-card product-card--skeleton">
+                  <div class="skeleton skeleton--text"></div>
+                  <div class="skeleton skeleton--img"></div>
+                  <div class="skeleton skeleton--text skeleton--text-sm"></div>
+                </div>
+              }
+            </div>
+          }
+
+          <!-- Error -->
+          @if (catalogService.productsError()) {
+            <div class="product-error">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="#FF4D4F" stroke-width="2"/>
+                <path d="M12 8v4M12 16h.01" stroke="#FF4D4F" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <p>{{ catalogService.productsError() }}</p>
+            </div>
+          }
+
+          <!-- Product grid -->
+          @if (!catalogService.productsLoading() && !catalogService.productsError()) {
+            @if (filteredProducts().length === 0) {
+              <div class="product-panel__empty">
+                <div class="empty-illustration">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                    <circle cx="11" cy="11" r="8" stroke="#c9a87c" stroke-width="1.5"/>
+                    <path d="M21 21l-4.35-4.35" stroke="#c9a87c" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <h3 class="empty-title">No products found</h3>
+                <p class="empty-desc">Try a different search term</p>
+              </div>
+            }
+
+            <div class="product-grid">
+              @for (product of filteredProducts(); track product.productId) {
+                <button
+                  class="product-card"
+                  [class.product-card--added]="isAdded(product.productId)"
+                  [class.product-card--unavailable]="!product.isAvailable"
+                  [disabled]="!product.isAvailable"
+                  (click)="addProduct(product)"
+                  [attr.aria-label]="'Add ' + product.name">
+
+                  <!-- Product name at top -->
+                  <div class="product-card__info">
+                    <h4 class="product-card__name">{{ product.name }}</h4>
+                  </div>
+
+                  <!-- Product image -->
+                  <div class="">
+                    <!-- @if (product.imageUrl) {
+                      <img
+                        [src]="product.imageUrl"
+                        [alt]="product.name"
+                        class="product-card__img"
+                      />
+                    } @else {
+                      <div class="product-card__img-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                          <rect x="3" y="3" width="18" height="18" rx="3" stroke="#c9a87c" stroke-width="1.5"/>
+                          <path d="M3 9h18M9 21V9" stroke="#c9a87c" stroke-width="1.5"/>
+                        </svg>
+                      </div>
+                    } -->
+
+                    <!-- Cart qty badge -->
+                    @if (cartQty(product.productId) > 0) {
+                      <span class="product-card__qty-badge">{{ cartQty(product.productId) }}</span>
+                    }
+
+                    <!-- Unavailable overlay -->
+                    @if (!product.isAvailable) {
+                      <div class="product-card__unavailable-overlay">
+                        <span>Unavailable</span>
+                      </div>
+                    }
+                  </div>
+
+                  <!-- Price at bottom -->
+                  <div class="product-card__footer">
+                    <p class="product-card__price">{{ product.price | number:'1.3-3' }} KD</p>
+
+                    @if (isAdded(product.productId)) {
+                      <span class="product-card__added-tick">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                          <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    }
+                  </div>
+
+                </button>
+              }
+            </div>
+          }
+        }
+
+      </section>
+
+      <!-- ── Category Sidebar (RIGHT) ──────────────────────────────────────── -->
+      <aside class="category-sidebar">
+
+        @if (catalogService.categoriesLoading()) {
+          <div class="sidebar-loading">
+            @for (i of [1,2,3,4,5,6]; track i) {
+              <div class="skeleton skeleton--cat"></div>
+            }
+          </div>
+        }
+
+        @if (catalogService.categoriesError()) {
+          <p class="sidebar-error">{{ catalogService.categoriesError() }}</p>
+        }
+
+        @for (cat of catalogService.categories(); track cat.categoryId) {
+          <button
+            class="category-btn"
+            [class.category-btn--active]="selectedCategory()?.categoryId === cat.categoryId"
+            (click)="selectCategory(cat)">
+            <span class="category-btn__name">{{ cat.categoryName }}</span>
+          </button>
+        }
+      </aside>
+
+    </div>
+
+  </div>
+</div>

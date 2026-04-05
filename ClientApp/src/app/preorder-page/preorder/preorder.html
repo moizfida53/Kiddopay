@@ -1,0 +1,103 @@
+<div class="container p-4 m-auto">
+  <div class="d-flex flex-column align-items-start">
+    <h2 class="text-dark fs-24 fw-600 mb-2">The pre-ordered items</h2>
+    <h3 class="text-secondary fs-16 mb-4">
+      Scan items below to prepare
+      {{
+        preOrderService.activePreOrder()?.studentName?.split(' ')?.[0] || ''
+      }}'s order
+    </h3>
+  </div>
+
+  <!-- Carousel Container with Navigation -->
+  <div class="carousel-wrapper position-relative">
+    <!-- Left Arrow -->
+    @if (showLeftArrow()) {
+      <button
+        (click)="scrollLeft()"
+        class="carousel-nav-btn carousel-nav-left"
+        aria-label="Previous items"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M15 18L9 12L15 6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    }
+
+    <!-- Scrollable Items -->
+    <div
+      #carousel
+      id="item-container"
+      class="d-flex overflow-x-scroll gap-4 py-4 carousel-scroll"
+    >
+@if (!allItemsSelected) {
+  @for (item of availableItems; track item.id) {
+            <button
+          (click)="onItemClick(item.id)"
+          class="card-item d-flex justify-content-between flex-column bg-light rounded-7 p-3 text-center transition-transform border-0 position-relative"
+          [class.card-item--selected]="item.isSelected"
+          [class.card-item--fully-selected]="item.isFullySelected"
+          [attr.aria-label]="item.displayName + (item.isFullySelected ? ' — fully selected' : item.isSelected ? ' — partially selected' : '')"
+        >
+
+          <!-- Product image -->
+          <div
+            class="d-flex justify-content-center align-items-center gap-2-5 bg-white rounded-6 h-4"
+          >
+            @if (item.img) {
+              <img
+                [src]="item.img"
+                class="item-image w-16 h-12"
+                [alt]="item.name"
+              />
+            }
+          </div>
+
+          <!-- Name -->
+          <h3 class="fs-13 fw-bold my-2">
+            {{ item.displayName || item.name }}
+          </h3>
+
+          <!-- Quantity row: ordered / remaining -->
+          <div class="d-flex justify-content-center align-items-center gap-2">
+              <span class="badge-remaining fs-12">
+                x{{ item.remainingQty }}
+              </span>
+          </div>
+
+        </button>
+      }
+    }
+    @if (allItemsSelected) {
+  <div class="text-center w-100 py-4">
+    <h3 class="text-success">All items have been selected</h3>
+  </div>
+}
+    </div>
+
+    <!-- Right Arrow -->
+    @if (showRightArrow()) {
+      <button
+        (click)="scrollRight()"
+        class="carousel-nav-btn carousel-nav-right"
+        aria-label="Next items"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M9 18L15 12L9 6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    }
+  </div>
+</div>
