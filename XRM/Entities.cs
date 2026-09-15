@@ -3379,6 +3379,27 @@ namespace CrmEarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 transactioncurrency_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("transactioncurrency_account")]
+		public CrmEarlyBound.TransactionCurrency transactioncurrency_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("transactioncurrency_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("transactioncurrency_account");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("transactioncurrency_account", null, value);
+				this.OnPropertyChanged("transactioncurrency_account");
+			}
+		}
+		
+		/// <summary>
 		/// Constructor for populating via LINQ queries given a LINQ anonymous type
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
@@ -5804,6 +5825,27 @@ namespace CrmEarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 blser_attachment_transactioncurrency_transactioncurrencyid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("blser_attachment_transactioncurrency_transactioncurrencyid")]
+		public CrmEarlyBound.TransactionCurrency blser_attachment_transactioncurrency_transactioncurrencyid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("blser_attachment_transactioncurrency_transactioncurrencyid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_attachment_transactioncurrency_transactioncurrencyid");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("blser_attachment_transactioncurrency_transactioncurrencyid", null, value);
+				this.OnPropertyChanged("blser_attachment_transactioncurrency_transactioncurrencyid");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 blser_contractpaymentterm_blser_attachments
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
@@ -6621,6 +6663,27 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("blser_BalanceTransfer_contact");
 				this.SetRelatedEntity<CrmEarlyBound.Contact>("blser_BalanceTransfer_contact", null, value);
 				this.OnPropertyChanged("blser_BalanceTransfer_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 TransactionCurrency_blser_BalanceTransfer
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_BalanceTransfer")]
+		public CrmEarlyBound.TransactionCurrency TransactionCurrency_blser_BalanceTransfer
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_BalanceTransfer", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_BalanceTransfer");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_BalanceTransfer", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_BalanceTransfer");
 			}
 		}
 		
@@ -8476,6 +8539,27 @@ namespace CrmEarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 TransactionCurrency_blser_ContractLine
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_ContractLine")]
+		public CrmEarlyBound.TransactionCurrency TransactionCurrency_blser_ContractLine
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_ContractLine", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_ContractLine");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_ContractLine", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_ContractLine");
+			}
+		}
+		
+		/// <summary>
 		/// Constructor for populating via LINQ queries given a LINQ anonymous type
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
@@ -9244,6 +9328,27 @@ namespace CrmEarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 TransactionCurrency_blser_ContractPaymentTerm
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_ContractPaymentTerm")]
+		public CrmEarlyBound.TransactionCurrency TransactionCurrency_blser_ContractPaymentTerm
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_ContractPaymentTerm", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_ContractPaymentTerm");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_ContractPaymentTerm", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_ContractPaymentTerm");
+			}
+		}
+		
+		/// <summary>
 		/// Constructor for populating via LINQ queries given a LINQ anonymous type
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
@@ -9872,6 +9977,554 @@ namespace CrmEarlyBound
                         Attributes["blser_departmentid"] = base.Id;
                         break;
                     case "blser_departmentid":
+                        var id = (System.Nullable<System.Guid>) value;
+                        if(id == null){ continue; }
+                        base.Id = id.Value;
+                        Attributes[name] = base.Id;
+                        break;
+                    case "formattedvalues":
+                        // Add Support for FormattedValues
+                        FormattedValues.AddRange((Microsoft.Xrm.Sdk.FormattedValueCollection)value);
+                        break;
+                    default:
+                        Attributes[name] = value;
+                        break;
+                }
+            }
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	public enum blser_devicetokenState
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 1,
+	}
+	
+	/// <summary>
+	/// This table stores FCM push-notification device tokens for parents
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("blser_devicetoken")]
+	public partial class blser_devicetoken : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		[System.Diagnostics.DebuggerNonUserCode()]
+		public blser_devicetoken() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "blser_devicetoken";
+		
+		public const string EntitySchemaName = "blser_devicetoken";
+		
+		public const string PrimaryIdAttribute = "blser_devicetokenid";
+		
+		public const string PrimaryNameAttribute = "blser_token";
+		
+		public const string EntityLogicalCollectionName = "blser_devicetokens";
+		
+		public const string EntitySetName = "blser_devicetokens";
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		[System.Diagnostics.DebuggerNonUserCode()]
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		[System.Diagnostics.DebuggerNonUserCode()]
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for entity instances
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_devicetokenid")]
+		public System.Nullable<System.Guid> blser_devicetokenId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("blser_devicetokenid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_devicetokenId");
+				this.SetAttributeValue("blser_devicetokenid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("blser_devicetokenId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_devicetokenid")]
+		public override System.Guid Id
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return base.Id;
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.blser_devicetokenId = value;
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_lastregisteredon")]
+		public System.Nullable<System.DateTime> blser_lastregisteredon
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("blser_lastregisteredon");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_lastregisteredon");
+				this.SetAttributeValue("blser_lastregisteredon", value);
+				this.OnPropertyChanged("blser_lastregisteredon");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_parent")]
+		public Microsoft.Xrm.Sdk.EntityReference blser_Parent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("blser_parent");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_Parent");
+				this.SetAttributeValue("blser_parent", value);
+				this.OnPropertyChanged("blser_Parent");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_platform")]
+		public virtual System.Collections.Generic.IEnumerable<blser_devicetoken_blser_Platform> blser_platform
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return EntityOptionSetEnum.GetMultiEnum<blser_devicetoken_blser_Platform>(this, "blser_platform");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_platform");
+				this.SetAttributeValue("blser_platform", EntityOptionSetEnum.GetMultiEnum(this, "blser_platform", value));
+				this.OnPropertyChanged("blser_platform");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_token")]
+		public string blser_token
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("blser_token");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_token");
+				this.SetAttributeValue("blser_token", value);
+				this.OnPropertyChanged("blser_token");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("CreatedOnBehalfBy");
+				this.SetAttributeValue("createdonbehalfby", value);
+				this.OnPropertyChanged("CreatedOnBehalfBy");
+			}
+		}
+		
+		/// <summary>
+		/// Sequence number of the import that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the record was modified.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("ModifiedOnBehalfBy");
+				this.SetAttributeValue("modifiedonbehalfby", value);
+				this.OnPropertyChanged("ModifiedOnBehalfBy");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time that the record was migrated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+		public System.Nullable<System.DateTime> OverriddenCreatedOn
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("OverriddenCreatedOn");
+				this.SetAttributeValue("overriddencreatedon", value);
+				this.OnPropertyChanged("OverriddenCreatedOn");
+			}
+		}
+		
+		/// <summary>
+		/// Owner Id
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
+		public Microsoft.Xrm.Sdk.EntityReference OwnerId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("ownerid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("OwnerId");
+				this.SetAttributeValue("ownerid", value);
+				this.OnPropertyChanged("OwnerId");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the business unit that owns the record
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningBusinessUnit
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the team that owns the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningTeam
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the user that owns the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningUser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
+			}
+		}
+		
+		/// <summary>
+		/// Status of the Device Token
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+		public System.Nullable<CrmEarlyBound.blser_devicetokenState> StateCode
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+				if ((optionSet != null))
+				{
+					return ((CrmEarlyBound.blser_devicetokenState)(System.Enum.ToObject(typeof(CrmEarlyBound.blser_devicetokenState), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("StateCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StateCode");
+			}
+		}
+		
+		/// <summary>
+		/// Reason for the status of the Device Token
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public virtual blser_devicetoken_StatusCode? StatusCode
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return ((blser_devicetoken_StatusCode?)(EntityOptionSetEnum.GetEnum(this, "statuscode")));
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("StatusCode");
+				this.SetAttributeValue("statuscode", value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null);
+				this.OnPropertyChanged("StatusCode");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timezoneruleversionnumber")]
+		public System.Nullable<int> TimeZoneRuleVersionNumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("timezoneruleversionnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TimeZoneRuleVersionNumber");
+				this.SetAttributeValue("timezoneruleversionnumber", value);
+				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Time zone code that was in use when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("utcconversiontimezonecode")]
+		public System.Nullable<int> UTCConversionTimeZoneCode
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("utcconversiontimezonecode");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("UTCConversionTimeZoneCode");
+				this.SetAttributeValue("utcconversiontimezonecode", value);
+				this.OnPropertyChanged("UTCConversionTimeZoneCode");
+			}
+		}
+		
+		/// <summary>
+		/// Version Number
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 blser_parent
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_parent")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("blser_parent")]
+		public CrmEarlyBound.blser_Parent blser_parent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.blser_Parent>("blser_parent", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_parent");
+				this.SetRelatedEntity<CrmEarlyBound.blser_Parent>("blser_parent", null, value);
+				this.OnPropertyChanged("blser_parent");
+			}
+		}
+		
+		/// <summary>
+		/// Constructor for populating via LINQ queries given a LINQ anonymous type
+		/// <param name="anonymousType">LINQ anonymous type.</param>
+		/// </summary>
+		[System.Diagnostics.DebuggerNonUserCode()]
+		public blser_devicetoken(object anonymousType) : 
+				this()
+		{
+            foreach (var p in anonymousType.GetType().GetProperties())
+            {
+                var value = p.GetValue(anonymousType, null);
+                var name = p.Name.ToLower();
+            
+                if (name.EndsWith("enum") && value.GetType().BaseType == typeof(System.Enum))
+                {
+                    value = new Microsoft.Xrm.Sdk.OptionSetValue((int) value);
+                    name = name.Remove(name.Length - "enum".Length);
+                }
+            
+                switch (name)
+                {
+                    case "id":
+                        base.Id = (System.Guid)value;
+                        Attributes["blser_devicetokenid"] = base.Id;
+                        break;
+                    case "blser_devicetokenid":
                         var id = (System.Nullable<System.Guid>) value;
                         if(id == null){ continue; }
                         base.Id = id.Value;
@@ -12280,6 +12933,27 @@ namespace CrmEarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 TransactionCurrency_blser_multiplepaymentitem
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_multiplepaymentitem")]
+		public CrmEarlyBound.TransactionCurrency TransactionCurrency_blser_multiplepaymentitem
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_multiplepaymentitem", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_multiplepaymentitem");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_multiplepaymentitem", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_multiplepaymentitem");
+			}
+		}
+		
+		/// <summary>
 		/// Constructor for populating via LINQ queries given a LINQ anonymous type
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
@@ -13648,6 +14322,26 @@ namespace CrmEarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N blser_orderline_order_blser_order
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("blser_orderline_order_blser_order")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_OrderLine> blser_orderline_order_blser_order
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_OrderLine>("blser_orderline_order_blser_order", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_orderline_order_blser_order");
+				this.SetRelatedEntities<CrmEarlyBound.blser_OrderLine>("blser_orderline_order_blser_order", null, value);
+				this.OnPropertyChanged("blser_orderline_order_blser_order");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N blser_PreOrder_blser_order
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("blser_PreOrder_blser_order")]
@@ -13748,6 +14442,27 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("blser_order_PreOrder_blser_preorder");
 				this.SetRelatedEntity<CrmEarlyBound.blser_PreOrder>("blser_order_PreOrder_blser_preorder", null, value);
 				this.OnPropertyChanged("blser_order_PreOrder_blser_preorder");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 TransactionCurrency_blser_Order
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_Order")]
+		public CrmEarlyBound.TransactionCurrency TransactionCurrency_blser_Order
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_Order", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_Order");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_Order", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_Order");
 			}
 		}
 		
@@ -13930,6 +14645,26 @@ namespace CrmEarlyBound
 		}
 		
 		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_order")]
+		public Microsoft.Xrm.Sdk.EntityReference blser_order
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("blser_order");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_order");
+				this.SetAttributeValue("blser_order", value);
+				this.OnPropertyChanged("blser_order");
+			}
+		}
+		
+		/// <summary>
 		/// Unique identifier for entity instances
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_orderlineid")]
@@ -14009,6 +14744,26 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("blser_PreOrderLine");
 				this.SetAttributeValue("blser_preorderline", value);
 				this.OnPropertyChanged("blser_PreOrderLine");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_product")]
+		public Microsoft.Xrm.Sdk.EntityReference blser_product
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("blser_product");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_product");
+				this.SetAttributeValue("blser_product", value);
+				this.OnPropertyChanged("blser_product");
 			}
 		}
 		
@@ -14415,6 +15170,69 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("blser_OrderLine_blser_preorderline");
 				this.SetRelatedEntity<CrmEarlyBound.blser_PreOrderLine>("blser_OrderLine_blser_preorderline", null, value);
 				this.OnPropertyChanged("blser_OrderLine_blser_preorderline");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 blser_orderline_order_blser_order
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_order")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("blser_orderline_order_blser_order")]
+		public CrmEarlyBound.blser_Order blser_orderline_order_blser_order
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.blser_Order>("blser_orderline_order_blser_order", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_orderline_order_blser_order");
+				this.SetRelatedEntity<CrmEarlyBound.blser_Order>("blser_orderline_order_blser_order", null, value);
+				this.OnPropertyChanged("blser_orderline_order_blser_order");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 blser_orderline_product_blser_product
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_product")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("blser_orderline_product_blser_product")]
+		public CrmEarlyBound.blser_Product blser_orderline_product_blser_product
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.blser_Product>("blser_orderline_product_blser_product", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_orderline_product_blser_product");
+				this.SetRelatedEntity<CrmEarlyBound.blser_Product>("blser_orderline_product_blser_product", null, value);
+				this.OnPropertyChanged("blser_orderline_product_blser_product");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 TransactionCurrency_blser_OrderLine
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_OrderLine")]
+		public CrmEarlyBound.TransactionCurrency TransactionCurrency_blser_OrderLine
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_OrderLine", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_OrderLine");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_OrderLine", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_OrderLine");
 			}
 		}
 		
@@ -15122,6 +15940,26 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("blser_ForbiddenProduct_blser_parent");
 				this.SetRelatedEntities<CrmEarlyBound.blser_ForbiddenProduct>("blser_ForbiddenProduct_blser_parent", null, value);
 				this.OnPropertyChanged("blser_ForbiddenProduct_blser_parent");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N blser_parent
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("blser_parent")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_devicetoken> blser_parent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_devicetoken>("blser_parent", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_parent");
+				this.SetRelatedEntities<CrmEarlyBound.blser_devicetoken>("blser_parent", null, value);
+				this.OnPropertyChanged("blser_parent");
 			}
 		}
 		
@@ -16705,6 +17543,27 @@ namespace CrmEarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 TransactionCurrency_blser_PreOrder
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_PreOrder")]
+		public CrmEarlyBound.TransactionCurrency TransactionCurrency_blser_PreOrder
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_PreOrder", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_PreOrder");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_PreOrder", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_PreOrder");
+			}
+		}
+		
+		/// <summary>
 		/// Constructor for populating via LINQ queries given a LINQ anonymous type
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
@@ -17429,6 +18288,27 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("blser_PreOrderLine_blser_product");
 				this.SetRelatedEntity<CrmEarlyBound.blser_Product>("blser_PreOrderLine_blser_product", null, value);
 				this.OnPropertyChanged("blser_PreOrderLine_blser_product");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 TransactionCurrency_blser_PreOrderLine
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_PreOrderLine")]
+		public CrmEarlyBound.TransactionCurrency TransactionCurrency_blser_PreOrderLine
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_PreOrderLine", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_PreOrderLine");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_PreOrderLine", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_PreOrderLine");
 			}
 		}
 		
@@ -19151,6 +20031,27 @@ namespace CrmEarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 TransactionCurrency_blser_ProcurementContract
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_ProcurementContract")]
+		public CrmEarlyBound.TransactionCurrency TransactionCurrency_blser_ProcurementContract
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_ProcurementContract", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_ProcurementContract");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_ProcurementContract", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_ProcurementContract");
+			}
+		}
+		
+		/// <summary>
 		/// Constructor for populating via LINQ queries given a LINQ anonymous type
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
@@ -19853,6 +20754,26 @@ namespace CrmEarlyBound
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N blser_orderline_product_blser_product
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("blser_orderline_product_blser_product")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_OrderLine> blser_orderline_product_blser_product
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_OrderLine>("blser_orderline_product_blser_product", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_orderline_product_blser_product");
+				this.SetRelatedEntities<CrmEarlyBound.blser_OrderLine>("blser_orderline_product_blser_product", null, value);
+				this.OnPropertyChanged("blser_orderline_product_blser_product");
 			}
 		}
 		
@@ -25648,6 +26569,27 @@ namespace CrmEarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 blser_wallet_currency_transactioncurrency
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_currency")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("blser_wallet_currency_transactioncurrency")]
+		public CrmEarlyBound.TransactionCurrency blser_wallet_currency_transactioncurrency
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("blser_wallet_currency_transactioncurrency", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_wallet_currency_transactioncurrency");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("blser_wallet_currency_transactioncurrency", null, value);
+				this.OnPropertyChanged("blser_wallet_currency_transactioncurrency");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 blser_wallet_Parent_blser_parent
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_parent")]
@@ -25686,6 +26628,27 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("blser_wallet_Student_contact");
 				this.SetRelatedEntity<CrmEarlyBound.Contact>("blser_wallet_Student_contact", null, value);
 				this.OnPropertyChanged("blser_wallet_Student_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 TransactionCurrency_blser_Wallet
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_Wallet")]
+		public CrmEarlyBound.TransactionCurrency TransactionCurrency_blser_Wallet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_Wallet", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_Wallet");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_Wallet", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_Wallet");
 			}
 		}
 		
@@ -26427,6 +27390,27 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("blser_WalletTopUp_blser_wallet");
 				this.SetRelatedEntity<CrmEarlyBound.blser_Wallet>("blser_WalletTopUp_blser_wallet", null, value);
 				this.OnPropertyChanged("blser_WalletTopUp_blser_wallet");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 TransactionCurrency_blser_WalletTopUp
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_WalletTopUp")]
+		public CrmEarlyBound.TransactionCurrency TransactionCurrency_blser_WalletTopUp
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_WalletTopUp", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_WalletTopUp");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("TransactionCurrency_blser_WalletTopUp", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_WalletTopUp");
 			}
 		}
 		
@@ -31535,6 +32519,27 @@ namespace CrmEarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 transactioncurrency_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("transactioncurrency_contact")]
+		public CrmEarlyBound.TransactionCurrency transactioncurrency_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<CrmEarlyBound.TransactionCurrency>("transactioncurrency_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("transactioncurrency_contact");
+				this.SetRelatedEntity<CrmEarlyBound.TransactionCurrency>("transactioncurrency_contact", null, value);
+				this.OnPropertyChanged("transactioncurrency_contact");
+			}
+		}
+		
+		/// <summary>
 		/// Constructor for populating via LINQ queries given a LINQ anonymous type
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
@@ -31560,6 +32565,846 @@ namespace CrmEarlyBound
                         Attributes["contactid"] = base.Id;
                         break;
                     case "contactid":
+                        var id = (System.Nullable<System.Guid>) value;
+                        if(id == null){ continue; }
+                        base.Id = id.Value;
+                        Attributes[name] = base.Id;
+                        break;
+                    case "formattedvalues":
+                        // Add Support for FormattedValues
+                        FormattedValues.AddRange((Microsoft.Xrm.Sdk.FormattedValueCollection)value);
+                        break;
+                    default:
+                        Attributes[name] = value;
+                        break;
+                }
+            }
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	public enum TransactionCurrencyState
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 1,
+	}
+	
+	/// <summary>
+	/// Currency in which a financial transaction is carried out.
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("transactioncurrency")]
+	public partial class TransactionCurrency : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		[System.Diagnostics.DebuggerNonUserCode()]
+		public TransactionCurrency() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "transactioncurrency";
+		
+		public const string EntitySchemaName = "TransactionCurrency";
+		
+		public const string PrimaryIdAttribute = "transactioncurrencyid";
+		
+		public const string PrimaryNameAttribute = "currencyname";
+		
+		public const string EntityLogicalCollectionName = "transactioncurrencies";
+		
+		public const string EntitySetName = "transactioncurrencies";
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		[System.Diagnostics.DebuggerNonUserCode()]
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		[System.Diagnostics.DebuggerNonUserCode()]
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who created the transaction currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the transaction currency was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who created the transactioncurrency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("CreatedOnBehalfBy");
+				this.SetAttributeValue("createdonbehalfby", value);
+				this.OnPropertyChanged("CreatedOnBehalfBy");
+			}
+		}
+		
+		/// <summary>
+		/// Name of the transaction currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("currencyname")]
+		public string CurrencyName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("currencyname");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("CurrencyName");
+				this.SetAttributeValue("currencyname", value);
+				this.OnPropertyChanged("CurrencyName");
+			}
+		}
+		
+		/// <summary>
+		/// Number of decimal places that can be used for currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("currencyprecision")]
+		public System.Nullable<int> CurrencyPrecision
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("currencyprecision");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("CurrencyPrecision");
+				this.SetAttributeValue("currencyprecision", value);
+				this.OnPropertyChanged("CurrencyPrecision");
+			}
+		}
+		
+		/// <summary>
+		/// Symbol for the transaction currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("currencysymbol")]
+		public string CurrencySymbol
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("currencysymbol");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("CurrencySymbol");
+				this.SetAttributeValue("currencysymbol", value);
+				this.OnPropertyChanged("CurrencySymbol");
+			}
+		}
+		
+		/// <summary>
+		/// Currency type that can be used for new currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("currencytype")]
+		public virtual TransactionCurrency_CurrencyType? CurrencyType
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return ((TransactionCurrency_CurrencyType?)(EntityOptionSetEnum.GetEnum(this, "currencytype")));
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("CurrencyType");
+				this.SetAttributeValue("currencytype", value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null);
+				this.OnPropertyChanged("CurrencyType");
+			}
+		}
+		
+		/// <summary>
+		/// The default image for the entity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage")]
+		public byte[] EntityImage
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<byte[]>("entityimage");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("EntityImage");
+				this.SetAttributeValue("entityimage", value);
+				this.OnPropertyChanged("EntityImage");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage_timestamp")]
+		public System.Nullable<long> EntityImage_Timestamp
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("entityimage_timestamp");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage_url")]
+		public string EntityImage_URL
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("entityimage_url");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimageid")]
+		public System.Nullable<System.Guid> EntityImageId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("entityimageid");
+			}
+		}
+		
+		/// <summary>
+		/// Exchange rate between the transaction currency and the base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("exchangerate")]
+		public System.Nullable<decimal> ExchangeRate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("exchangerate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("ExchangeRate");
+				this.SetAttributeValue("exchangerate", value);
+				this.OnPropertyChanged("ExchangeRate");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the data import or data migration that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// ISO currency code for the transaction currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isocurrencycode")]
+		public string ISOCurrencyCode
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("isocurrencycode");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("ISOCurrencyCode");
+				this.SetAttributeValue("isocurrencycode", value);
+				this.OnPropertyChanged("ISOCurrencyCode");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who last modified the transaction currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the transaction currency was last modified.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who last modified the transactioncurrency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("ModifiedOnBehalfBy");
+				this.SetAttributeValue("modifiedonbehalfby", value);
+				this.OnPropertyChanged("ModifiedOnBehalfBy");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the organization associated with the transaction currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("organizationid")]
+		public Microsoft.Xrm.Sdk.EntityReference OrganizationId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("organizationid");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time that the record was migrated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+		public System.Nullable<System.DateTime> OverriddenCreatedOn
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("OverriddenCreatedOn");
+				this.SetAttributeValue("overriddencreatedon", value);
+				this.OnPropertyChanged("OverriddenCreatedOn");
+			}
+		}
+		
+		/// <summary>
+		/// Status of the transaction currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+		public System.Nullable<CrmEarlyBound.TransactionCurrencyState> StateCode
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+				if ((optionSet != null))
+				{
+					return ((CrmEarlyBound.TransactionCurrencyState)(System.Enum.ToObject(typeof(CrmEarlyBound.TransactionCurrencyState), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("StateCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StateCode");
+			}
+		}
+		
+		/// <summary>
+		/// Reason for the status of the transaction currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public virtual TransactionCurrency_StatusCode? StatusCode
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return ((TransactionCurrency_StatusCode?)(EntityOptionSetEnum.GetEnum(this, "statuscode")));
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("StatusCode");
+				this.SetAttributeValue("statuscode", value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null);
+				this.OnPropertyChanged("StatusCode");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the transaction currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		public System.Nullable<System.Guid> TransactionCurrencyId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("transactioncurrencyid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrencyId");
+				this.SetAttributeValue("transactioncurrencyid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("TransactionCurrencyId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		public override System.Guid Id
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return base.Id;
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.TransactionCurrencyId = value;
+			}
+		}
+		
+		/// <summary>
+		/// Version number of the transaction currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N blser_attachment_transactioncurrency_transactioncurrencyid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("blser_attachment_transactioncurrency_transactioncurrencyid")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_attachment> blser_attachment_transactioncurrency_transactioncurrencyid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_attachment>("blser_attachment_transactioncurrency_transactioncurrencyid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_attachment_transactioncurrency_transactioncurrencyid");
+				this.SetRelatedEntities<CrmEarlyBound.blser_attachment>("blser_attachment_transactioncurrency_transactioncurrencyid", null, value);
+				this.OnPropertyChanged("blser_attachment_transactioncurrency_transactioncurrencyid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N blser_wallet_currency_transactioncurrency
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("blser_wallet_currency_transactioncurrency")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_Wallet> blser_wallet_currency_transactioncurrency
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_Wallet>("blser_wallet_currency_transactioncurrency", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_wallet_currency_transactioncurrency");
+				this.SetRelatedEntities<CrmEarlyBound.blser_Wallet>("blser_wallet_currency_transactioncurrency", null, value);
+				this.OnPropertyChanged("blser_wallet_currency_transactioncurrency");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N transactioncurrency_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("transactioncurrency_account")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.Account> transactioncurrency_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.Account>("transactioncurrency_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("transactioncurrency_account");
+				this.SetRelatedEntities<CrmEarlyBound.Account>("transactioncurrency_account", null, value);
+				this.OnPropertyChanged("transactioncurrency_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N TransactionCurrency_blser_BalanceTransfer
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_BalanceTransfer")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_BalanceTransfer> TransactionCurrency_blser_BalanceTransfer
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_BalanceTransfer>("TransactionCurrency_blser_BalanceTransfer", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_BalanceTransfer");
+				this.SetRelatedEntities<CrmEarlyBound.blser_BalanceTransfer>("TransactionCurrency_blser_BalanceTransfer", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_BalanceTransfer");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N TransactionCurrency_blser_ContractLine
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_ContractLine")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_ContractLine> TransactionCurrency_blser_ContractLine
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_ContractLine>("TransactionCurrency_blser_ContractLine", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_ContractLine");
+				this.SetRelatedEntities<CrmEarlyBound.blser_ContractLine>("TransactionCurrency_blser_ContractLine", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_ContractLine");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N TransactionCurrency_blser_ContractPaymentTerm
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_ContractPaymentTerm")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_ContractPaymentTerm> TransactionCurrency_blser_ContractPaymentTerm
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_ContractPaymentTerm>("TransactionCurrency_blser_ContractPaymentTerm", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_ContractPaymentTerm");
+				this.SetRelatedEntities<CrmEarlyBound.blser_ContractPaymentTerm>("TransactionCurrency_blser_ContractPaymentTerm", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_ContractPaymentTerm");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N TransactionCurrency_blser_multiplepaymentitem
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_multiplepaymentitem")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_multiplepaymentitem> TransactionCurrency_blser_multiplepaymentitem
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_multiplepaymentitem>("TransactionCurrency_blser_multiplepaymentitem", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_multiplepaymentitem");
+				this.SetRelatedEntities<CrmEarlyBound.blser_multiplepaymentitem>("TransactionCurrency_blser_multiplepaymentitem", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_multiplepaymentitem");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N TransactionCurrency_blser_Order
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_Order")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_Order> TransactionCurrency_blser_Order
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_Order>("TransactionCurrency_blser_Order", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_Order");
+				this.SetRelatedEntities<CrmEarlyBound.blser_Order>("TransactionCurrency_blser_Order", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_Order");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N TransactionCurrency_blser_OrderLine
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_OrderLine")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_OrderLine> TransactionCurrency_blser_OrderLine
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_OrderLine>("TransactionCurrency_blser_OrderLine", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_OrderLine");
+				this.SetRelatedEntities<CrmEarlyBound.blser_OrderLine>("TransactionCurrency_blser_OrderLine", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_OrderLine");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N TransactionCurrency_blser_PreOrder
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_PreOrder")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_PreOrder> TransactionCurrency_blser_PreOrder
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_PreOrder>("TransactionCurrency_blser_PreOrder", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_PreOrder");
+				this.SetRelatedEntities<CrmEarlyBound.blser_PreOrder>("TransactionCurrency_blser_PreOrder", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_PreOrder");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N TransactionCurrency_blser_PreOrderLine
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_PreOrderLine")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_PreOrderLine> TransactionCurrency_blser_PreOrderLine
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_PreOrderLine>("TransactionCurrency_blser_PreOrderLine", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_PreOrderLine");
+				this.SetRelatedEntities<CrmEarlyBound.blser_PreOrderLine>("TransactionCurrency_blser_PreOrderLine", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_PreOrderLine");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N TransactionCurrency_blser_ProcurementContract
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_ProcurementContract")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_ProcurementContract> TransactionCurrency_blser_ProcurementContract
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_ProcurementContract>("TransactionCurrency_blser_ProcurementContract", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_ProcurementContract");
+				this.SetRelatedEntities<CrmEarlyBound.blser_ProcurementContract>("TransactionCurrency_blser_ProcurementContract", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_ProcurementContract");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N TransactionCurrency_blser_Wallet
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_Wallet")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_Wallet> TransactionCurrency_blser_Wallet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_Wallet>("TransactionCurrency_blser_Wallet", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_Wallet");
+				this.SetRelatedEntities<CrmEarlyBound.blser_Wallet>("TransactionCurrency_blser_Wallet", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_Wallet");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N TransactionCurrency_blser_WalletTopUp
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("TransactionCurrency_blser_WalletTopUp")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.blser_WalletTopUp> TransactionCurrency_blser_WalletTopUp
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.blser_WalletTopUp>("TransactionCurrency_blser_WalletTopUp", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrency_blser_WalletTopUp");
+				this.SetRelatedEntities<CrmEarlyBound.blser_WalletTopUp>("TransactionCurrency_blser_WalletTopUp", null, value);
+				this.OnPropertyChanged("TransactionCurrency_blser_WalletTopUp");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N transactioncurrency_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("transactioncurrency_contact")]
+		public System.Collections.Generic.IEnumerable<CrmEarlyBound.Contact> transactioncurrency_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<CrmEarlyBound.Contact>("transactioncurrency_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("transactioncurrency_contact");
+				this.SetRelatedEntities<CrmEarlyBound.Contact>("transactioncurrency_contact", null, value);
+				this.OnPropertyChanged("transactioncurrency_contact");
+			}
+		}
+		
+		/// <summary>
+		/// Constructor for populating via LINQ queries given a LINQ anonymous type
+		/// <param name="anonymousType">LINQ anonymous type.</param>
+		/// </summary>
+		[System.Diagnostics.DebuggerNonUserCode()]
+		public TransactionCurrency(object anonymousType) : 
+				this()
+		{
+            foreach (var p in anonymousType.GetType().GetProperties())
+            {
+                var value = p.GetValue(anonymousType, null);
+                var name = p.Name.ToLower();
+            
+                if (name.EndsWith("enum") && value.GetType().BaseType == typeof(System.Enum))
+                {
+                    value = new Microsoft.Xrm.Sdk.OptionSetValue((int) value);
+                    name = name.Remove(name.Length - "enum".Length);
+                }
+            
+                switch (name)
+                {
+                    case "id":
+                        base.Id = (System.Guid)value;
+                        Attributes["transactioncurrencyid"] = base.Id;
+                        break;
+                    case "transactioncurrencyid":
                         var id = (System.Nullable<System.Guid>) value;
                         if(id == null){ continue; }
                         base.Id = id.Value;
@@ -31697,6 +33542,18 @@ namespace CrmEarlyBound
 			get
 			{
 				return this.CreateQuery<CrmEarlyBound.blser_Department>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="CrmEarlyBound.blser_devicetoken"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<CrmEarlyBound.blser_devicetoken> blser_devicetokenSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<CrmEarlyBound.blser_devicetoken>();
 			}
 		}
 		
@@ -31987,6 +33844,18 @@ namespace CrmEarlyBound
 				return this.CreateQuery<CrmEarlyBound.Contact>();
 			}
 		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="CrmEarlyBound.TransactionCurrency"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<CrmEarlyBound.TransactionCurrency> TransactionCurrencySet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<CrmEarlyBound.TransactionCurrency>();
+			}
+		}
 	}
 	
 	internal sealed class EntityOptionSetEnum
@@ -32004,6 +33873,33 @@ namespace CrmEarlyBound
 				}
 			}
 			return null;
+		}
+		
+		[System.Diagnostics.DebuggerNonUserCode()]
+		public static System.Collections.Generic.IEnumerable<T> GetMultiEnum<T>(Microsoft.Xrm.Sdk.Entity entity, string attributeLogicalName)
+		
+		{
+			Microsoft.Xrm.Sdk.OptionSetValueCollection value = entity.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValueCollection>(attributeLogicalName);
+			System.Collections.Generic.List<T> list = new System.Collections.Generic.List<T>();
+			if (value == null)
+			{
+				return list;
+			}
+			list.AddRange(System.Linq.Enumerable.Select(value, v => (T)(object)v.Value));
+			return list;
+		}
+		
+		[System.Diagnostics.DebuggerNonUserCode()]
+		public static Microsoft.Xrm.Sdk.OptionSetValueCollection GetMultiEnum<T>(Microsoft.Xrm.Sdk.Entity entity, string attributeLogicalName, System.Collections.Generic.IEnumerable<T> values)
+		
+		{
+			if (values == null)
+			{
+				return null;
+			}
+			Microsoft.Xrm.Sdk.OptionSetValueCollection collection = new Microsoft.Xrm.Sdk.OptionSetValueCollection();
+			collection.AddRange(System.Linq.Enumerable.Select(values, v => new Microsoft.Xrm.Sdk.OptionSetValue((int)(object)v)));
+			return collection;
 		}
 	}
 	

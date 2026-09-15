@@ -19,16 +19,16 @@ namespace KiddoPay.BLL.Services
 <fetch top='1'>
   <entity name='blser_cashier'>
     <attribute name='blser_cashierid'    />
-    <attribute name='blser_displayname'  />
+    <attribute name='blser_name'  />
     <attribute name='blser_jobtitle'     />
     <attribute name='blser_email'        />
-    <attribute name='blser_Store'        />
+    <attribute name='blser_store'        />
     <filter>
       <condition attribute='blser_microsoftoid' operator='eq' value='{microsoftOid}' />
       <condition attribute='blser_isactive'     operator='eq' value='1'             />
       <condition attribute='statecode'          operator='eq' value='0'             />
     </filter>
-    <link-entity name='blser_store' from='blser_storeid' to='blser_Store'
+    <link-entity name='blser_store' from='blser_storeid' to='blser_store'
                  alias='store' link-type='outer'>
       <attribute name='blser_name' />
     </link-entity>
@@ -46,10 +46,10 @@ namespace KiddoPay.BLL.Services
             return new CashierProfileDTO
             {
                 CashierId   = e.Id,
-                DisplayName = e.GetAttributeValue<string>("blser_displayname") ?? "",
+                DisplayName = e.GetAttributeValue<string>("blser_name") ?? "",
                 JobTitle    = e.GetAttributeValue<string>("blser_jobtitle") ?? "",
                 Email       = e.GetAttributeValue<string>("blser_email") ?? "",
-                StoreId     = e.GetAttributeValue<EntityReference>("blser_Store")?.Id ?? Guid.Empty,
+                StoreId     = e.GetAttributeValue<EntityReference>("blser_store")?.Id ?? Guid.Empty,
                 StoreName   = e.GetAttributeValue<AliasedValue>("store.blser_name")?.Value as string ?? ""
             };
         }

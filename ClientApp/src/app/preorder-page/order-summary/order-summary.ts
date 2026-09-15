@@ -1,5 +1,6 @@
 import { Component, inject, signal, computed } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { ItemsService } from 'src/app/services/items.service';
 import { StudentService } from 'src/app/services/student.service';
 import { OrderResult } from 'src/app/services/kiddopay.models';
@@ -15,6 +16,7 @@ export type PaymentMethod = 'cash' | 'knet' | 'wallet';
 export class OrderSummary {
   public readonly itemsService = inject(ItemsService);
   public readonly studentService = inject(StudentService);
+  private readonly router = inject(Router);
 
   // ─── Submitting / error state ─────────────────────────────────────────────
 
@@ -168,5 +170,16 @@ export class OrderSummary {
   /** Called when the cashier cancels the order mid-session */
   onCancelOrder(): void {
     this.itemsService.resetSession();
+  }
+
+  /**
+   * Called from the "Finish Order" button on the success modal. Clears the
+   * session (student, cart, active pre-order) and sends the cashier back to
+   * the scanner screen, ready for the next student — mirrors what "Cancel
+   * Order" already does, just on the happy path instead.
+   */
+  onFinishOrder(): void {
+    this.itemsService.resetSession();
+    this.router.navigate(['/scanner']);
   }
 }

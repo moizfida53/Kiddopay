@@ -1,40 +1,53 @@
-<!-- Student Card Component -->
-<!-- @if (studentService.currentStudent(); as student) { -->
-  <div class="container mb-3 p-4 d-flex align-items-center gap-3 rounded-12">
+@if (studentService.currentStudent(); as student) {
 
-    <!-- Avatar -->
-    <img
-      [src]=" 'assets/Images/kid-avatar.png'"
-      class="student-avatar w-16 h-16 rounded-50"
-      alt="Student avatar" />
-
-    <!-- Student Info -->
-    <div class="student-info d-flex flex-column">
-      <h1 class="fw-600 fs-24 m-0">{{ "mahmoud" }}</h1>
-
-      <div class="d-flex flex-row align-items-center gap-2 mt-1">
-        <div class="avatar-svg w-6 h-6">
-          <img src="assets/Images/avatar.svg" class="w-100 h-100" />
-        </div>
-        <h2 class="fs-18 fw-500 m-0">{{ "Grade 5" }}</h2>
-      </div>
-    </div>
-  </div>
-  
-<!-- Student Card Component -->
+<!-- ── Name + Grade card ─────────────────────────────────────────────── -->
 <div class="container mb-3 p-4 d-flex align-items-center gap-3 rounded-12">
 
-    <!-- Student Info -->
-    <div class="student-info d-flex flex-column gap-2">
-        <h3 class="fw-600 m-0">Daily Spend Limit</h3>
+  <img [src]="student.avatarUrl || 'assets/Images/kid-avatar.png'"
+       class="student-avatar rounded-50"
+       alt="Student avatar" />
 
-        <div class="d-flex flex-row align-items-center gap-2 mt-1">
-            <div class="avatar-svg">
-                <img src="assets/Images/empty-wallet.svg" class="w-100 h-100" />
-            </div>
-            <h1 class="m-0 px-2 fw-semibold text-tertiary">5KD</h1>
-        </div>
+  <div class="student-info d-flex flex-column">
+    <h1 class="fw-600 fs-24 m-0">{{ student.fullName }}</h1>
+
+    <div class="d-flex flex-row align-items-center gap-2 mt-1">
+      <div class="avatar-svg w-6 h-6">
+        <img src="assets/Images/avatar.svg" class="w-100 h-100" alt="" />
+      </div>
+      <h2 class="fs-18 fw-500 m-0">{{ student.grade }}</h2>
     </div>
+  </div>
 </div>
 
-<!-- } -->
+<!-- ── Wallet / Daily limit card ─────────────────────────────────────── -->
+<div class="container mb-3 p-4 d-flex align-items-center gap-3 rounded-12">
+  <div class="student-info d-flex flex-column gap-2">
+
+    <h3 class="fw-600 m-0">Daily Spend Limit</h3>
+    <div class="d-flex flex-row align-items-center gap-2 mt-1">
+      <div class="avatar-svg">
+        <img src="assets/Images/empty-wallet.svg" class="w-100 h-100" alt="" />
+      </div>
+      <h1 class="m-0 px-2 fw-semibold text-tertiary">
+        {{ student.remainingDailyBudget | number:'1.3-3' }} KD
+      </h1>
+    </div>
+
+    <!-- Wallet balance -->
+    <!-- <div class="d-flex flex-row align-items-center gap-2">
+      <small class="text-muted">Wallet balance:</small>
+      <small class="fw-semibold">{{ student.walletBalance | number:'1.3-3' }} KD</small>
+    </div> -->
+
+  </div>
+</div>
+
+} @else {
+<!-- Skeleton / loading state while student is being fetched -->
+<div class="container mb-3 p-4 d-flex align-items-center gap-3 rounded-12">
+  <div class="student-info d-flex flex-column gap-2 w-100">
+    <div class="skeleton skeleton--text" style="width: 60%; height: 24px;"></div>
+    <div class="skeleton skeleton--text" style="width: 40%; height: 18px;"></div>
+  </div>
+</div>
+}

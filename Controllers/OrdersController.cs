@@ -2,7 +2,6 @@ using Kiddopay.BLL.DTOs;
 using Kiddopay.BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace KiddoPay.API.Controllers
 {
@@ -15,12 +14,7 @@ namespace KiddoPay.API.Controllers
 
         /// <summary>
         /// Completes an order from the cashier screen.
-        /// Handles three scenarios:
-        ///   1. DirectScan     — no pre-order, cashier scanned fresh items.
-        ///   2. PreOrderFulfillment — student had a pre-order, all items from it.
-        ///   3. Mixed          — pre-order partially fulfilled + extra items scanned.
-        ///
-        /// On success: deducts wallet, records order + lines, updates pre-order status.
+        /// POST /api/Orders/complete
         /// </summary>
         [HttpPost("complete")]
         public IActionResult CompleteOrder([FromBody] CompleteOrderRequest request)
@@ -58,14 +52,17 @@ namespace KiddoPay.API.Controllers
 
         /// <summary>
         /// Cancels an in-progress order before it is completed.
-        /// Called when the cashier taps "Cancel Order" on the cashier screen.
-        /// No wallet deduction occurs.
+        /// DELETE /api/Orders/{orderId}/cancel
+        /// Angular calls: this.api.delete(`/api/Orders/${orderId}/cancel`)
         /// </summary>
-        [HttpPatch("{orderId:guid}/cancel")]
+        [HttpDelete("{orderId:guid}/cancel")]
         public IActionResult CancelOrder(Guid orderId)
         {
             try
             {
+                if (orderId == Guid.Empty)
+                    return BadRequest(new { message = "OrderId is required." });
+
                 var success = _orders.CancelOrder(orderId);
                 if (!success)
                     return StatusCode(500, new { message = "Failed to cancel order." });

@@ -1,23 +1,28 @@
 ﻿using Kiddopay.BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
-using System.Net.Http.Headers;
 
 namespace Kiddopay.Controllers
 {
+    /// <summary>
+    /// Routes follow LocalBaseController convention: [controller]/[action]
+    ///   GET /PreOrders/GetActivePreOrder?studentId={guid}
+    ///   GET /PreOrders/GetPreOrderById/{preOrderId}
+    /// </summary>
     public class PreOrdersController(IPreOrderService preOrderService) : LocalBaseController
     {
-
         /// <summary>
         /// Returns the active pre-order for a student on today's date.
-        /// Angular calls this after the NFC scan when HasActivePreOrder = true.
+        /// Called by Angular after the NFC scan when HasActivePreOrder = true.
         /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetActivePreOrder([FromQuery] Guid studentId)
         {
             try
             {
+                if (studentId == Guid.Empty)
+                    return BadRequest(new { message = "StudentId is required." });
+
                 var preOrder = await preOrderService.GetActivePreOrderForStudent(studentId);
                 if (preOrder == null)
                     return NotFound(new { message = "No active pre-order found for this student today." });
@@ -34,11 +39,14 @@ namespace Kiddopay.Controllers
         /// Returns a pre-order by its GUID. Used to refresh state mid-fulfillment.
         /// </summary>
         [HttpGet("{preOrderId:guid}")]
-        public IActionResult GetPreOrderById(Guid preOrderId)
+        public async Task<IActionResult> GetPreOrderById(Guid preOrderId)
         {
             try
             {
-                var preOrder = preOrderService.GetPreOrderById(preOrderId);
+                if (preOrderId == Guid.Empty)
+                    return BadRequest(new { message = "PreOrderId is required." });
+
+                var preOrder = await preOrderService.GetPreOrderById(preOrderId);
                 if (preOrder == null)
                     return NotFound(new { message = "Pre-order not found." });
 
@@ -49,6 +57,5 @@ namespace Kiddopay.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
-  
     }
 }

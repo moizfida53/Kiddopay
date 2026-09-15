@@ -7,6 +7,7 @@ import { Preorder } from './preorder/preorder';
 import { ItemsService } from 'src/app/services/items.service';
 import { StudentService } from 'src/app/services/student.service';
 import { PreOrderService } from 'src/app/services/preorder.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-preorder-page',
@@ -18,20 +19,24 @@ export class PreorderPage implements OnInit {
   public readonly itemsService = inject(ItemsService);
   public readonly studentService = inject(StudentService);
   public readonly preOrderService = inject(PreOrderService);
-
-  // Replace with your real student-ID lookup (e.g. from auth service)
-  private readonly STUDENT_ID = 'eff63907-2816-f111-8341-000d3a6793f9';
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
-    /**
-     * loadActivePreOrder internally calls restoreSession first.
-     * If a session exists for this student it keeps the cart intact;
-     * otherwise it pre-populates the cart from the API response.
-     */
-    this.itemsService.loadActivePreOrder(this.STUDENT_ID);
+    const student = this.studentService.currentStudent();
+
+    // Guard: if no student is loaded (e.g. direct URL navigation),
+    // send the user back to the scanner screen.
+    if (!student) {
+      this.router.navigate(['/scanner']);
+      return;
+    }
+
+    // loadActivePreOrder restores the session if one exists for this student,
+    // otherwise pre-populates from the API and clears the cart.
+    this.itemsService.loadActivePreOrder(student.studentId);
   }
 
-  /** True once there is at least one visible card in either carousel */
+  /** True once the cashier has selected at least one item from either panel. */
   get hasSelectedItems(): boolean {
     return (
       this.itemsService.preOrderVisibleCards().size > 0 ||
@@ -39,8 +44,8 @@ export class PreorderPage implements OnInit {
     );
   }
 
-  /** True when the current student has an active pre-order */
+  /** True when the current student has an active pre-order. */
   get hasActivePreOrder(): boolean {
-    return this.studentService.currentStudent()?.hasActivePreOrder ?? true;
+    return this.studentService.currentStudent()?.hasActivePreOrder ?? false;
   }
 }

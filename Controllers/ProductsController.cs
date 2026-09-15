@@ -1,18 +1,23 @@
 using Kiddopay.Controllers;
 using KiddoPay.BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace KiddoPay.API.Controllers
 {
+    /// <summary>
+    /// Routes follow LocalBaseController convention: [controller]/[action]
+    ///   GET /Products/ScanProduct?barcode=...&amp;studentId=...&amp;currentCartTotal=...
+    ///   GET /Products/GetSafeAlternatives?productCategoryId=...&amp;studentId=...
+    ///   GET /Products/GetCategories
+    ///   GET /Products/GetProductsByCategory?categoryId=...
+    /// </summary>
     public class ProductsController(IProductService productService) : LocalBaseController
     {
         private readonly IProductService _products = productService;
 
         /// <summary>
-        /// Scans a product barcode and validates it for a specific student.
+        /// Validates a scanned barcode for a specific student.
         /// Returns the product + any warning (AllergyAlert | LowBalance | ForbiddenCategory | None).
-        /// Angular calls this every time the cashier scans a new item barcode.
         /// </summary>
         [HttpGet]
         public IActionResult ScanProduct(
@@ -64,8 +69,7 @@ namespace KiddoPay.API.Controllers
         }
 
         /// <summary>
-        /// Returns all active product categories.
-        /// Called once when the catalog modal is first opened so the sidebar can be populated.
+        /// Returns all active product categories for the catalog modal sidebar.
         /// </summary>
         [HttpGet]
         public IActionResult GetCategories()
@@ -82,8 +86,7 @@ namespace KiddoPay.API.Controllers
         }
 
         /// <summary>
-        /// Returns all available products belonging to the given category.
-        /// Called when the cashier clicks a category in the catalog modal sidebar.
+        /// Returns all available products in a given category.
         /// </summary>
         [HttpGet]
         public IActionResult GetProductsByCategory([FromQuery] Guid categoryId)

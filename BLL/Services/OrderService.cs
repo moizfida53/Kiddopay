@@ -29,11 +29,38 @@ namespace KiddoPay.BLL.Services
             if (walletId == Guid.Empty)
                 throw new InvalidOperationException("Student wallet not found.");
 
-            var orderTotal = request.Lines.Sum(l => l.UnitPrice * l.Quantity);
+            // Pre-order lines were already paid for when the pre-order was placed
+            // (see blser_preorder.blser_totalpaid) — fulfilling one here is just the
+            // cashier handing the items over, not a new purchase. Only the freshly
+            // scanned/added lines represent money changing hands right now, so only
+            // those count toward the balance check, the daily limit, and the wallet
+            // deduction below. Summing every line (including pre-order ones) into
+            // "orderTotal" here would silently re-charge the student's wallet for
+            // items already paid for, and would double-count that value against the
+            // daily limit on every subsequent order today via GetTodaysSpend().
+            var orderTotal = request.Lines
+                .Where(l => !l.IsFromPreOrder)
+                .Sum(l => l.UnitPrice * l.Quantity);
 
-            if (balanceBefore < orderTotal)
-                throw new InvalidOperationException(
-                    $"Insufficient balance. Required: {orderTotal:F3} KWD, Available: {balanceBefore:F3} KWD.");
+            if (orderTotal > 0)
+            {
+                if (balanceBefore < orderTotal)
+                    throw new InvalidOperationException(
+                        $"Insufficient balance. Required: {orderTotal:F3} KWD, Available: {balanceBefore:F3} KWD.");
+
+                // ── 1b. Enforce the student's daily spend limit, if one is configured ─
+                // A null or zero blser_dailyallowance is treated as "no limit set" — confirm
+                // this matches intent before relying on it. Skipped entirely when nothing
+                // is actually being charged (orderTotal == 0, e.g. a pure pre-order pickup)
+                // — a same-day limit that's already been hit shouldn't block handing over
+                // items that cost nothing new.
+                var (dailyAllowance, dailySpentToday) = GetStudentDailyLimit(request.StudentId);
+                if (dailyAllowance.HasValue && dailyAllowance.Value > 0
+                    && dailySpentToday + orderTotal > dailyAllowance.Value)
+                    throw new InvalidOperationException(
+                        $"Daily spending limit exceeded. Limit: {dailyAllowance.Value:F3} KWD, " +
+                        $"already spent today: {dailySpentToday:F3} KWD, this order: {orderTotal:F3} KWD.");
+            }
 
             // ── 2. Create the blser_order header ─────────────────────────────
             var orderReference = GenerateOrderReference();
@@ -41,12 +68,12 @@ namespace KiddoPay.BLL.Services
 
             var orderEntity = new Entity("blser_order")
             {
-                ["blser_name"]                = orderReference,
-                ["blser_Student"]             = new EntityReference("contact", request.StudentId),
-                ["blser_Cashier"]             = new EntityReference("blser_cashier", request.CashierId),
-                ["blser_Store"]               = new EntityReference("blser_store", request.StoreId),
+                ["blser_orderreference"]                = orderReference,
+                ["blser_student"]             = new EntityReference("contact", request.StudentId),
+                ["blser_cashier"]             = new EntityReference("blser_cashier", request.CashierId),
+                ["blser_store"]               = new EntityReference("blser_store", request.StoreId),
                 ["blser_ordertotal"]          = new Money(orderTotal),
-                ["blser_orderstatus"]         = new OptionSetValue(2),   // Completed
+                ["blser_orderstatus"]         = new OptionSetValue(550220001),   // Completed
                 ["blser_ordertype"]           = new OptionSetValue(MapOrderType(request.OrderType)),
                 ["blser_orderdatetime"]       = now,
                 ["blser_walletbalancebefore"] = new Money(balanceBefore),
@@ -55,7 +82,7 @@ namespace KiddoPay.BLL.Services
             };
 
             if (request.PreOrderId.HasValue)
-                orderEntity["blser_PreOrder"] =
+                orderEntity["blser_preorder"] =
                     new EntityReference("blser_preorder", request.PreOrderId.Value);
 
             var orderId = _org.Create(orderEntity);
@@ -66,18 +93,25 @@ namespace KiddoPay.BLL.Services
             {
                 var lineEntity = new Entity("blser_orderline")
                 {
-                    ["blser_name"]           = $"{orderReference}-LINE-{lineIndex}",
-                    ["blser_Order"]          = new EntityReference("blser_order", orderId),
-                    ["blser_Product"]        = new EntityReference("blser_product", line.ProductId),
-                    ["blser_quantity"]       = line.Quantity,
-                    ["blser_unitprice"]      = new Money(line.UnitPrice),
-                    ["blser_linetotal"]      = new Money(line.UnitPrice * line.Quantity),
-                    ["blser_linestatus"]     = new OptionSetValue(1),   // Included
+                    ["blser_orderlinename"] = $"{orderReference}-LINE-{lineIndex}",
+                    // Requires blser_order and blser_product lookup fields on blser_orderline
+                    // in Dataverse — see "Database changes" step 1. Do NOT run this against
+                    // an environment that doesn't have those fields yet: CompleteOrder() will
+                    // fail on every order until they exist.
+                    ["blser_order"] = new EntityReference("blser_order", orderId),
+                    ["blser_product"] = new EntityReference("blser_product", line.ProductId),
+                    ["blser_quantity"] = line.Quantity,
+                    ["blser_unitprice"] = line.UnitPrice,
+                    ["blser_linetotal"] = line.UnitPrice * line.Quantity,
+                    ["blser_linestatus"] = new OptionSetValue(550220000),
                     ["blser_isfrompreorder"] = line.IsFromPreOrder
                 };
 
                 if (line.IsFromPreOrder && line.PreOrderLineId.HasValue)
-                    lineEntity["blser_PreOrderLine"] =
+                    // Dataverse attribute lookups are case-sensitive — the logical name is
+                    // all-lowercase "blser_preorderline" (confirmed in XRM/Entities.cs), not
+                    // the PascalCase "blser_PreOrderLine" the early-bound C# property is named.
+                    lineEntity["blser_preorderline"] =
                         new EntityReference("blser_preorderline", line.PreOrderLineId.Value);
 
                 _org.Create(lineEntity);
@@ -91,8 +125,8 @@ namespace KiddoPay.BLL.Services
             };
             _org.Update(walletUpdate);
 
-            // ── 5. Update daily spend on student contact ──────────────────────
-            UpdateStudentDailySpend(request.StudentId, orderTotal);
+            // ── 5. Daily spend is now computed live from today's completed orders
+            // (see GetTodaysSpend) — no stored counter to update here.
 
             // ── 6. Update pre-order lines & header status (if applicable) ─────
             if (request.PreOrderId.HasValue)
@@ -125,7 +159,7 @@ namespace KiddoPay.BLL.Services
             {
                 var updateEntity = new Entity("blser_order", orderId)
                 {
-                    ["blser_orderstatus"] = new OptionSetValue(3)   // Cancelled
+                    ["blser_orderstatus"] = new OptionSetValue(550220002)   // Cancelled
                 };
                 _org.Update(updateEntity);
                 return true;
@@ -141,6 +175,60 @@ namespace KiddoPay.BLL.Services
         // Private helpers
         // ──────────────────────────────────────────────────────────────────────
 
+        private (decimal? dailyAllowance, decimal dailySpentToday) GetStudentDailyLimit(Guid studentId)
+        {
+            var fetch = $@"
+<fetch top='1'>
+  <entity name='contact'>
+    <attribute name='blser_dailyallowance'  />
+    <filter>
+      <condition attribute='contactid' operator='eq' value='{studentId}' />
+    </filter>
+  </entity>
+</fetch>";
+
+            var result = _org.RetrieveMultiple(new FetchExpression(fetch));
+            if (!result.Entities.Any())
+                return (null, 0m);
+
+            var allowance = result.Entities[0].GetAttributeValue<Money>("blser_dailyallowance")?.Value;
+            return (allowance, GetTodaysSpend(studentId));
+        }
+
+        // "Spent today" used to be a running counter (blser_dailyspenttoday) that was
+        // incremented on every completed order and never reset — it just grew forever
+        // across days, eventually producing a negative "remaining budget" once it
+        // exceeded blser_dailyallowance. Computing it live from today's completed
+        // orders instead is self-resetting (no schema change needed) and always correct.
+        private decimal GetTodaysSpend(Guid studentId)
+        {
+            var fetch = $@"
+<fetch aggregate='true'>
+  <entity name='blser_order'>
+    <attribute name='blser_ordertotal' alias='total_spent' aggregate='sum' />
+    <filter>
+      <condition attribute='blser_student'       operator='eq'    value='{studentId}' />
+      <condition attribute='blser_orderstatus'   operator='eq'    value='550220001'   />
+      <condition attribute='blser_orderdatetime' operator='today'                     />
+      <condition attribute='statecode'           operator='eq'    value='0'           />
+    </filter>
+  </entity>
+</fetch>";
+
+            var result = _org.RetrieveMultiple(new FetchExpression(fetch));
+            var row = result.Entities.FirstOrDefault();
+            if (row == null) return 0m;
+
+            // An aliased attribute (alias='total_spent') always comes back wrapped in
+            // AliasedValue, even with no link-entity — GetAttributeValue<Money> throws
+            // an InvalidCastException here instead of returning null. Unwrap it first.
+            var aliased = row.GetAttributeValue<AliasedValue>("total_spent")?.Value;
+            if (aliased is Money aliasedMoney) return aliasedMoney.Value;
+            if (aliased is decimal aliasedDecimal) return aliasedDecimal;
+
+            return 0m;
+        }
+
         private (Guid walletId, decimal balance) GetStudentWallet(Guid studentId)
         {
             var fetch = $@"
@@ -149,7 +237,7 @@ namespace KiddoPay.BLL.Services
     <attribute name='blser_walletid' />
     <attribute name='blser_balance'  />
     <filter>
-      <condition attribute='blser_Student' operator='eq' value='{studentId}' />
+      <condition attribute='blser_student' operator='eq' value='{studentId}' />
       <condition attribute='statecode'     operator='eq' value='0'           />
     </filter>
   </entity>
@@ -163,31 +251,6 @@ namespace KiddoPay.BLL.Services
             return (wallet.Id, wallet.GetAttributeValue<Money>("blser_balance")?.Value ?? 0m);
         }
 
-        private void UpdateStudentDailySpend(Guid studentId, decimal amount)
-        {
-            // Fetch current daily spent value first
-            var fetch = $@"
-<fetch top='1'>
-  <entity name='contact'>
-    <attribute name='blser_dailyspenttoday' />
-    <filter>
-      <condition attribute='contactid' operator='eq' value='{studentId}' />
-    </filter>
-  </entity>
-</fetch>";
-
-            var result = _org.RetrieveMultiple(new FetchExpression(fetch));
-            if (!result.Entities.Any()) return;
-
-            var currentSpent = result.Entities[0]
-                .GetAttributeValue<Money>("blser_dailyspenttoday")?.Value ?? 0m;
-
-            var contactUpdate = new Entity("contact", studentId)
-            {
-                ["blser_dailyspenttoday"] = new Money(currentSpent + amount)
-            };
-            _org.Update(contactUpdate);
-        }
 
         private void UpdatePreOrderFulfillment(
             Guid preOrderId,
@@ -219,9 +282,9 @@ namespace KiddoPay.BLL.Services
                 var unitPrice  = lineEntity.GetAttributeValue<Money>("blser_unitprice")?.Value ?? 0m;
                 var newFulfilled = prevFulfilled + line.Quantity;
 
-                int newLineStatus = newFulfilled >= ordered ? 3   // Fulfilled
-                                  : newFulfilled > 0        ? 2   // PartiallyFulfilled
-                                  :                           1;  // Pending
+                int newLineStatus = newFulfilled >= ordered ? 550220002   // Fulfilled
+                                  : newFulfilled > 0        ? 550220001   // PartiallyFulfilled
+                                  : 550220000;  // Pending
 
                 var lineUpdate = new Entity("blser_preorderline", line.PreOrderLineId!.Value)
                 {
@@ -241,7 +304,7 @@ namespace KiddoPay.BLL.Services
     <attribute name='blser_lineamount'       />
     <attribute name='blser_quantityfulfilled'/>
     <filter>
-      <condition attribute='blser_PreOrder' operator='eq' value='{preOrderId}' />
+      <condition attribute='blser_preorder' operator='eq' value='{preOrderId}' />
       <condition attribute='statecode'      operator='eq' value='0'            />
     </filter>
   </entity>
@@ -249,13 +312,17 @@ namespace KiddoPay.BLL.Services
 
             var allLines = _org.RetrieveMultiple(new FetchExpression(preOrderLineFetchAll)).Entities;
             bool allFulfilled = allLines.All(l =>
-                l.GetAttributeValue<OptionSetValue>("blser_linestatus")?.Value == 3);
+                l.GetAttributeValue<OptionSetValue>("blser_linestatus")?.Value == 550220002);
+            // NOTE: this used to compare against 550220000 (a pre-order *status*
+            // option-set value) instead of 0 — quantityfulfilled is a plain item
+            // count, so that comparison was never true and the header status could
+            // never land on PartiallyFulfilled.
             bool anyFulfilled = allLines.Any(l =>
                 l.GetAttributeValue<int>("blser_quantityfulfilled") > 0);
 
-            int newPreOrderStatus = allFulfilled ? 3   // FullyFulfilled
-                                  : anyFulfilled ? 2   // PartiallyFulfilled
-                                  :                1;  // Active
+            int newPreOrderStatus = allFulfilled ? 550220002   // FullyFulfilled
+                                  : anyFulfilled ? 550220001   // PartiallyFulfilled
+                                  : 550220000;  // Active
 
             // Fetch current totalFulfilled to accumulate
             var preOrderHeaderFetch = $@"
@@ -275,7 +342,8 @@ namespace KiddoPay.BLL.Services
             {
                 ["blser_preorderstatus"]  = new OptionSetValue(newPreOrderStatus),
                 ["blser_totalfulfilled"]  = new Money(existingFulfilled + totalFulfilledAmount),
-                ["blser_FulfillingOrder"] = new EntityReference("blser_order", fulfillingOrderId)
+                // Same case-sensitivity pitfall as blser_preorderline above.
+                ["blser_fulfillingorder"] = new EntityReference("blser_order", fulfillingOrderId)
             };
             _org.Update(preOrderUpdate);
         }
@@ -303,11 +371,11 @@ namespace KiddoPay.BLL.Services
             var fetch = $@"
 <fetch top='1'>
   <entity name='blser_order'>
-    <attribute name='blser_name' />
+    <attribute name='blser_orderreference' />
     <filter>
-      <condition attribute='blser_name' operator='like' value='{prefix}%' />
+      <condition attribute='blser_orderreference' operator='like' value='{prefix}%' />
     </filter>
-    <order attribute='blser_name' descending='true' />
+    <order attribute='blser_orderreference' descending='true' />
   </entity>
 </fetch>";
 
@@ -327,10 +395,10 @@ namespace KiddoPay.BLL.Services
 
         private static int MapOrderType(string orderType) => orderType?.ToLower() switch
         {
-            "directscan"           => 1,
-            "preorderfulfillment"  => 2,
-            "mixed"                => 3,
-            _                      => 1
+            "directscan"           => 550220000,
+            "preorderfulfillment"  => 550220001,
+            "mixed"                => 550220002,
+            _                      => 550220003
         };
     }
 }

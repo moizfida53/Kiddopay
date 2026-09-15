@@ -793,6 +793,19 @@ namespace CrmEarlyBound
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
+	public enum blser_devicetoken_StatusCode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("Active", 0)]
+		Active = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("Inactive", 1)]
+		Inactive = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
 	public enum blser_FiscalYear_StatusCode
 	{
 		
@@ -1999,6 +2012,32 @@ namespace CrmEarlyBound
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
+	public enum TransactionCurrency_CurrencyType
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("Custom", 1)]
+		Custom = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("System", 0)]
+		System = 0,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	public enum TransactionCurrency_StatusCode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("Active", 0)]
+		Active = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("Inactive", 1)]
+		Inactive = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
 	public enum aiinsightcard_Surface
 	{
 		
@@ -2213,6 +2252,23 @@ namespace CrmEarlyBound
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
+	public enum msdyn_knowledgeharvestplan_msdyn_HarvestType
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("Realtime", 0)]
+		Realtime = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("Once", 1)]
+		Once = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("Recurring", 2)]
+		Recurring = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
 	public enum msdyn_knowledgemanagementsetting_msdyn_actionlist
 	{
 		
@@ -2231,5 +2287,18 @@ namespace CrmEarlyBound
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		[OptionSetMetadataAttribute("Link article and send article content", 3, "#0000ff")]
 		Linkarticleandsendarticlecontent = 3,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	public enum blser_devicetoken_blser_Platform
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("Android", 0)]
+		Android = 550220000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("iOS", 1)]
+		iOS = 550220001,
 	}
 }

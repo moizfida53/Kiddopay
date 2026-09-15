@@ -20,8 +20,9 @@
         Panel 1 — Pre-order items
         Shows "please select your pre-order" prompt when nothing is selected yet.
       -->
+        @if(hasActivePreOrder) {
       <app-scanned-items></app-scanned-items>
-
+        }
       <!--
         Panel 2 — New / freshly-scanned items
         Shows an empty-state prompt when no barcode has been scanned yet.

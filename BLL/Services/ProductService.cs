@@ -1,16 +1,19 @@
 using Kiddopay.BLL.DTOs;
 using KiddoPay.BLL.Interfaces;
+using Microsoft.Identity.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace KiddoPay.BLL.Services
 {
-    public class ProductService(IOrganizationService organizationService) : IProductService
+    public class ProductService(IOrganizationService organizationService, IConfiguration config) : IProductService
     {
         private readonly IOrganizationService _org = organizationService;
+        private readonly IConfiguration _config = config;
 
         // ──────────────────────────────────────────────────────────────────────
         // Public API
@@ -30,14 +33,14 @@ namespace KiddoPay.BLL.Services
     <attribute name='blser_imageurl'        />
     <attribute name='blser_barcode'         />
     <attribute name='blser_isavailable'     />
-    <attribute name='blser_ProductCategory' />
+    <attribute name='blser_category' />
     <filter>
       <condition attribute='blser_barcode'     operator='eq' value='{barcode}' />
       <condition attribute='blser_isavailable' operator='eq' value='1'         />
       <condition attribute='statecode'         operator='eq' value='0'         />
     </filter>
     <link-entity name='blser_productcategory' from='blser_productcategoryid'
-                 to='blser_ProductCategory' alias='cat' link-type='outer'>
+                 to='blser_category' alias='cat' link-type='outer'>
       <attribute name='blser_name'             />
       <attribute name='blser_productcategoryid'/>
     </link-entity>
@@ -48,7 +51,9 @@ namespace KiddoPay.BLL.Services
             if (!result.Entities.Any())
                 return null;
 
-            return MapProductEntity(result.Entities[0]);
+            var product = MapProductEntity(result.Entities[0]);
+            BackfillImageIfMissing(product);
+            return product;
         }
 
         public ScannedProductResultDTO ValidateProductForStudent(
@@ -116,14 +121,14 @@ namespace KiddoPay.BLL.Services
     <attribute name='blser_imageurl'        />
     <attribute name='blser_barcode'         />
     <attribute name='blser_isavailable'     />
-    <attribute name='blser_ProductCategory' />
+    <attribute name='blser_category' />
     <filter>
-      <condition attribute='blser_ProductCategory' operator='eq' value='{productCategoryId}' />
+      <condition attribute='blser_category'        operator='eq' value='{productCategoryId}' />
       <condition attribute='blser_isavailable'     operator='eq' value='1'                   />
       <condition attribute='statecode'             operator='eq' value='0'                   />
     </filter>
     <link-entity name='blser_productcategory' from='blser_productcategoryid'
-                 to='blser_ProductCategory' alias='cat' link-type='outer'>
+                 to='blser_category' alias='cat' link-type='outer'>
       <attribute name='blser_name'             />
       <attribute name='blser_productcategoryid'/>
     </link-entity>
@@ -132,11 +137,16 @@ namespace KiddoPay.BLL.Services
 
             var result = _org.RetrieveMultiple(new FetchExpression(fetch));
 
-            return result.Entities
+            var alternatives = result.Entities
                 .Select(MapProductEntity)
                 .Where(p => !GetAllergyConflictsForProduct(p.ProductId, studentId).Any()
                          && !IsCategoryForbiddenForStudent(p.CategoryId, studentId))
                 .ToList();
+
+            foreach (var alt in alternatives)
+                BackfillImageIfMissing(alt);
+
+            return alternatives;
         }
 
         /// <summary>
@@ -150,7 +160,6 @@ namespace KiddoPay.BLL.Services
   <entity name='blser_productcategory'>
     <attribute name='blser_productcategoryid' />
     <attribute name='blser_name'              />
-    <attribute name='blser_imageurl'          />
     <filter>
       <condition attribute='statecode' operator='eq' value='0' />
     </filter>
@@ -184,13 +193,13 @@ namespace KiddoPay.BLL.Services
     <attribute name='blser_imageurl'        />
     <attribute name='blser_barcode'         />
     <attribute name='blser_isavailable'     />
-    <attribute name='blser_ProductCategory' />
+    <attribute name='blser_category' />
     <filter>
-      <condition attribute='blser_ProductCategory' operator='eq' value='{categoryId}' />
+      <condition attribute='blser_category' operator='eq' value='{categoryId}' />
       <condition attribute='statecode'             operator='eq' value='0'            />
     </filter>
     <link-entity name='blser_productcategory' from='blser_productcategoryid'
-                 to='blser_ProductCategory' alias='cat' link-type='outer'>
+                 to='blser_category' alias='cat' link-type='outer'>
       <attribute name='blser_name'             />
       <attribute name='blser_productcategoryid'/>
     </link-entity>
@@ -200,14 +209,81 @@ namespace KiddoPay.BLL.Services
 
             var result = _org.RetrieveMultiple(new FetchExpression(fetch));
 
-            return result.Entities
+            var products = result.Entities
                 .Select(MapProductEntity)
                 .ToList();
+
+            foreach (var product in products)
+                BackfillImageIfMissing(product);
+
+            return products;
         }
 
         // ──────────────────────────────────────────────────────────────────────
         // Private helpers
         // ──────────────────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// blser_imageurl (a plain hosted-URL field) is the fast path — a bare
+        /// &lt;img src&gt;, no backend round-trip. When it's empty, fall back to the
+        /// native Dataverse Image column (blser_image), which the maker-portal
+        /// "Image" field control actually uploads to. That column isn't reachable
+        /// directly from the browser (it needs an authenticated Web API call), so
+        /// we fetch it here and hand back a base64 data URI instead — same pattern
+        /// PreOrderService already uses for pre-order line images.
+        /// </summary>
+        private void BackfillImageIfMissing(ProductDTO product)
+        {
+            if (!string.IsNullOrWhiteSpace(product.ImageUrl))
+                return;
+
+            try
+            {
+                product.ImageUrl = GetProductImageAsBase64(product.ProductId)
+                    .GetAwaiter().GetResult() ?? "";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to get image for product {product.ProductId}: {ex.Message}");
+                product.ImageUrl = "";
+            }
+        }
+
+        private async Task<string?> GetProductImageAsBase64(Guid productId)
+        {
+            var dataverseUrl = "https://initiumsolutionsdefault.api.crm4.dynamics.com"; // or from config
+
+            var imageUrl = $"{dataverseUrl.TrimEnd('/')}/api/data/v9.2/blser_products({productId})/blser_image/$value";
+
+            using var httpClient = new HttpClient();
+            var token = await GetAccessToken();
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await httpClient.GetAsync(imageUrl);
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var imageBytes = await response.Content.ReadAsByteArrayAsync();
+            return $"data:image/png;base64,{Convert.ToBase64String(imageBytes)}";
+        }
+
+        private async Task<string> GetAccessToken()
+        {
+            var tenantId = _config["AzureAd:TenantId"];
+            var clientId = _config["AzureAd:ClientId"];
+            var clientSecret = _config["AzureAd:ClientSecret"];
+
+            var app = ConfidentialClientApplicationBuilder.Create(clientId)
+                .WithClientSecret(clientSecret)
+                .WithAuthority($"https://login.microsoftonline.com/{tenantId}")
+                .Build();
+
+            string[] scopes = new string[] { "https://initiumsolutionsdefault.api.crm4.dynamics.com/.default" };
+
+            var result = await app.AcquireTokenForClient(scopes).ExecuteAsync();
+            return result.AccessToken;
+        }
 
         private bool IsCategoryForbiddenForStudent(Guid categoryId, Guid studentId)
         {
@@ -232,10 +308,12 @@ namespace KiddoPay.BLL.Services
         /// </summary>
         private List<string> GetAllergyConflictsForProduct(Guid productId, Guid studentId)
         {
-            var fetch = $@"
+            // Step 1 — ingredient(s) this student is allergic to, with the allergy display name.
+            // blser_allergies has a direct EntityReference lookup to blser_ingredient
+            // (one ingredient per allergy record), so no further join is needed here.
+            var allergyFetch = $@"
 <fetch distinct='true'>
   <entity name='blser_studentallergy'>
-    <attribute name='blser_studentallergyid' />
     <filter>
       <condition attribute='blser_Student'  operator='eq' value='{studentId}' />
       <condition attribute='blser_isactive' operator='eq' value='1'           />
@@ -243,25 +321,78 @@ namespace KiddoPay.BLL.Services
     </filter>
     <link-entity name='blser_allergies' from='blser_allergiesid' to='blser_Allergy'
                  alias='al' link-type='inner'>
+      <attribute name='blser_ingredient'  />
       <attribute name='blser_displayname' />
-      <link-entity name='blser_ingredients' from='blser_allergies' to='blser_allergiesid'
-                   alias='ing' link-type='inner'>
-        <link-entity name='blser_productingredients' from='blser_Ingredient' to='blser_ingredientsid'
-                     alias='pi' link-type='inner'>
-          <filter>
-            <condition attribute='blser_Product' operator='eq' value='{productId}' />
-          </filter>
-        </link-entity>
-      </link-entity>
+      <filter>
+        <condition attribute='statecode' operator='eq' value='0' />
+      </filter>
     </link-entity>
   </entity>
 </fetch>";
 
-            var result = _org.RetrieveMultiple(new FetchExpression(fetch));
+            var allergyRows = _org.RetrieveMultiple(new FetchExpression(allergyFetch)).Entities;
 
-            return result.Entities
-                .Select(e => e.GetAttributeValue<AliasedValue>("al.blser_displayname")?.Value as string)
-                .Where(name => !string.IsNullOrEmpty(name))
+            var allergenNameByIngredientId = allergyRows
+                .Select(e => new
+                {
+                    IngredientRef = e.GetAttributeValue<AliasedValue>("al.blser_ingredient")?.Value as EntityReference,
+                    AllergyName   = e.GetAttributeValue<AliasedValue>("al.blser_displayname")?.Value as string,
+                })
+                .Where(x => x.IngredientRef != null)
+                .GroupBy(x => x.IngredientRef.Id)
+                .ToDictionary(g => g.Key, g => g.First().AllergyName);
+
+            if (!allergenNameByIngredientId.Any())
+                return new List<string>();
+
+            // Step 2 — this product's ingredient-composition rows (blser_productingredient).
+            var productIngredientFetch = $@"
+<fetch>
+  <entity name='blser_productingredient'>
+    <attribute name='blser_productingredientid' />
+    <filter>
+      <condition attribute='blser_product' operator='eq' value='{productId}' />
+      <condition attribute='statecode'     operator='eq' value='0'           />
+    </filter>
+  </entity>
+</fetch>";
+
+            var productIngredientIds = _org
+                .RetrieveMultiple(new FetchExpression(productIngredientFetch))
+                .Entities.Select(e => e.Id).ToList();
+
+            if (!productIngredientIds.Any())
+                return new List<string>();
+
+            // Step 3 — which ingredients those composition rows are linked to, via the native
+            // N:N intersect entity blser_productingredient_blser_ingredient. Queried directly
+            // rather than through a FetchXML intersect="true" link, since that syntax couldn't
+            // be verified against a live environment — this is the lower-risk equivalent.
+            var idFilter = string.Join("", productIngredientIds
+                .Select(id => $"<value>{id}</value>"));
+            var intersectFetch = $@"
+<fetch distinct='true'>
+  <entity name='blser_productingredient_blser_ingredient'>
+    <attribute name='blser_ingredientid' />
+    <filter>
+      <condition attribute='blser_productingredientid' operator='in'>
+        {idFilter}
+      </condition>
+    </filter>
+  </entity>
+</fetch>";
+
+            var linkedIngredientIds = _org
+                .RetrieveMultiple(new FetchExpression(intersectFetch))
+                .Entities
+                .Select(e => e.GetAttributeValue<Guid?>("blser_ingredientid"))
+                .Where(id => id.HasValue)
+                .Select(id => id!.Value);
+
+            // Step 4 — intersect this product's ingredients with the student's allergens.
+            return linkedIngredientIds
+                .Where(allergenNameByIngredientId.ContainsKey)
+                .Select(id => allergenNameByIngredientId[id])
                 .Distinct()
                 .ToList();
         }
@@ -273,7 +404,7 @@ namespace KiddoPay.BLL.Services
   <entity name='blser_wallet'>
     <attribute name='blser_balance' />
     <filter>
-      <condition attribute='blser_Student' operator='eq' value='{studentId}' />
+      <condition attribute='blser_student' operator='eq' value='{studentId}' />
       <condition attribute='statecode'     operator='eq' value='0'           />
     </filter>
   </entity>
@@ -315,7 +446,7 @@ namespace KiddoPay.BLL.Services
             {
                 ProductId = e.Id,
                 Name = e.GetAttributeValue<string>("blser_name") ?? "",
-                Price = e.GetAttributeValue<Money>("blser_price")?.Value ?? 0m,
+                Price = e.GetAttributeValue<decimal?>("blser_price") ?? 0m,
                 ImageUrl = e.GetAttributeValue<string>("blser_imageurl") ?? "",
                 Barcode = e.GetAttributeValue<string>("blser_barcode") ?? "",
                 IsAvailable = e.GetAttributeValue<bool>("blser_isavailable"),

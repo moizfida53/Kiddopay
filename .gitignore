@@ -480,5 +480,9 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
-appsettings.json 
-KIDDOPAY SECRETS.txt 
+appsettings.json
+KIDDOPAY SECRETS.txt
+
+# Firebase Admin SDK service-account key (see push-notification setup guide) --
+# never commit this, it's a live credential.
+firebase-service-account.json

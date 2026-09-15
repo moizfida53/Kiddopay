@@ -45,7 +45,7 @@
 
           @for (item of itemsService.newOrderCartItems(); track item.productId) {
             <div class="scanned-item">
-              <!-- <div class="scanned-item__img-wrap">
+              <div class="scanned-item__img-wrap">
                 @if (item.imageUrl) {
                   <img [src]="item.imageUrl" [alt]="item.productName" class="scanned-item__img" />
                 } @else {
@@ -55,7 +55,7 @@
                     </svg>
                   </div>
                 }
-              </div> -->
+              </div>
 
               <div class="scanned-item__info">
                 <span class="scanned-item__name">{{ item.productName | titlecase }}</span>
@@ -75,7 +75,8 @@
                 <button
                   class="qty-btn qty-btn--plus"
                   (click)="increaseQty(item.productId)"
-                  aria-label="Increase quantity">
+                  [disabled]="!canIncreaseQty(item.productId)"
+                  [attr.aria-label]="canIncreaseQty(item.productId) ? 'Increase quantity' : (qtyBlockedReason(item.productId) === 'daily-limit' ? 'Increasing quantity would exceed the daily spend limit' : 'Increasing quantity would exceed wallet balance')">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                     <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
                   </svg>
@@ -93,6 +94,18 @@
             <span class="scanned-panel__total-label">Total</span>
             <span class="scanned-panel__total-value">{{ itemsService.newOrderTotal() | number:'1.3-3' }} KD</span>
           </div>
+
+          <!-- <div class="scanned-panel__balance" [class.scanned-panel__balance--zero]="remainingWalletBalance() <= 0">
+            <span>Wallet balance available:</span>
+            <span class="scanned-panel__balance-value">{{ remainingWalletBalance() | number:'1.3-3' }} KD</span>
+          </div> -->
+
+          @if (hasDailyLimit()) {
+            <div class="scanned-panel__balance" [class.scanned-panel__balance--zero]="remainingDailyLimit() <= 0">
+              <span>Daily limit remaining:</span>
+              <span class="scanned-panel__balance-value">{{ remainingDailyLimit() | number:'1.3-3' }} KD</span>
+            </div>
+          }
 
           <div class="scanned-panel__actions">
             <button
@@ -180,9 +193,10 @@
                   class="product-card"
                   [class.product-card--added]="isAdded(product.productId)"
                   [class.product-card--unavailable]="!product.isAvailable"
-                  [disabled]="!product.isAvailable"
+                  [class.product-card--insufficient]="product.isAvailable && !canAffordProduct(product)"
+                  [disabled]="!product.isAvailable || !canAffordProduct(product)"
                   (click)="addProduct(product)"
-                  [attr.aria-label]="'Add ' + product.name">
+                  [attr.aria-label]="!product.isAvailable ? product.name + ' unavailable' : blockedReason(product) === 'daily-limit' ? product.name + ' exceeds daily spend limit' : !canAffordProduct(product) ? product.name + ' exceeds wallet balance' : 'Add ' + product.name">
 
                   <!-- Product name at top -->
                   <div class="product-card__info">
@@ -190,8 +204,8 @@
                   </div>
 
                   <!-- Product image -->
-                  <div class="">
-                    <!-- @if (product.imageUrl) {
+                  <div class="product-card__img-wrap">
+                    @if (product.imageUrl) {
                       <img
                         [src]="product.imageUrl"
                         [alt]="product.name"
@@ -204,17 +218,24 @@
                           <path d="M3 9h18M9 21V9" stroke="#c9a87c" stroke-width="1.5"/>
                         </svg>
                       </div>
-                    } -->
+                    }
 
                     <!-- Cart qty badge -->
-                    @if (cartQty(product.productId) > 0) {
+                    <!-- @if (cartQty(product.productId) > 0) {
                       <span class="product-card__qty-badge">{{ cartQty(product.productId) }}</span>
-                    }
+                    } -->
 
                     <!-- Unavailable overlay -->
                     @if (!product.isAvailable) {
                       <div class="product-card__unavailable-overlay">
                         <span>Unavailable</span>
+                      </div>
+                    }
+
+                    <!-- Insufficient balance / daily-limit overlay -->
+                    @if (product.isAvailable && !canAffordProduct(product)) {
+                      <div class="product-card__insufficient-overlay">
+                        <span>{{ blockedReason(product) === 'daily-limit' ? 'Exceeds daily limit' : 'Exceeds balance' }}</span>
                       </div>
                     }
                   </div>

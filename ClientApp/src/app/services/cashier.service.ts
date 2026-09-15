@@ -1,5 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { BaseApiService } from './baseApi.service';
 import { CashierProfile } from './kiddopay.models';
 
@@ -7,18 +7,18 @@ import { CashierProfile } from './kiddopay.models';
 export class CashierService {
   private api = inject(BaseApiService);
 
-  // Populated once after Microsoft SSO login — used by all order requests
+  /** Populated once after Microsoft SSO login. Used by all order requests. */
   profile = signal<CashierProfile | null>(null);
 
   /**
-   * Call once in AppComponent (or an auth guard) after the user logs in.
    * Reads the Azure AD OID from the JWT and returns the matching cashier record.
+   * Matches: GET /api/Cashier/me
+   * Returns an Observable so callers (e.g. AppComponent) can react or catch errors.
    */
-  loadProfile(): void {
-    this.api
+  loadProfile(): Observable<CashierProfile> {
+    return this.api
       .get<CashierProfile>('/api/Cashier/me')
-      .pipe(tap((p) => this.profile.set(p)))
-      .subscribe();
+      .pipe(tap(p => this.profile.set(p)));
   }
 
   get cashierId(): string {

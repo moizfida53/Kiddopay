@@ -9,43 +9,39 @@ export class PreOrderService {
 
   activePreOrder = signal<PreOrder | null>(null);
 
+  /**
+   * Fetches a pre-order by its GUID.
+   * Matches: GET /PreOrders/GetPreOrderById/{preOrderId}
+   * (LocalBaseController uses [controller]/[action] routing)
+   */
   getById(preOrderId: string): Observable<PreOrder> {
-    console.log('[PreOrderService] getById → START', { preOrderId });
-
-    return this.api.get<PreOrder>(`/api/PreOrders/${preOrderId}`).pipe(
-      tap({
-        next: (po) => {
-          console.log('[PreOrderService] getById → SUCCESS', po);
-          this.activePreOrder.set(po);
-        },
-        error: (err) => {
-          console.error('[PreOrderService] getById → ERROR', err);
-        },
-        complete: () => {
-          console.log('[PreOrderService] getById → COMPLETE');
-        },
-      }),
-    );
+    return this.api
+      .get<PreOrder>(`/PreOrders/GetPreOrderById/${preOrderId}`)
+      .pipe(
+        tap({
+          next: po => this.activePreOrder.set(po),
+          error: err => console.error('[PreOrderService] getById error', err),
+        }),
+      );
   }
 
-loadActivePreOrder(studentId: string): Observable<PreOrder> {
-    console.log('[PreOrderService] loadActivePreOrder → START');
-
+  /**
+   * Loads the active pre-order for a student.
+   * Matches: GET /PreOrders/GetActivePreOrder?studentId=...
+   * (LocalBaseController convention: [controller]/[action])
+   */
+  loadActivePreOrder(studentId: string): Observable<PreOrder> {
     return this.api
       .get<PreOrder>(`/PreOrders/GetActivePreOrder?studentId=${studentId}`)
       .pipe(
         tap({
-          next: (po) => {
-            console.log('[PreOrderService] loadActivePreOrder → SUCCESS', po);
-            this.activePreOrder.set(po);
-          },
-          error: (err) => console.error('[PreOrderService] loadActivePreOrder → ERROR', err),
-        })
+          next: po => this.activePreOrder.set(po),
+          error: err => console.error('[PreOrderService] loadActivePreOrder error', err),
+        }),
       );
   }
 
   clear(): void {
-    console.log('[PreOrderService] clear → RESET activePreOrder');
     this.activePreOrder.set(null);
   }
 }

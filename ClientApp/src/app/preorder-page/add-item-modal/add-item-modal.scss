@@ -264,7 +264,6 @@ $radius-card: 12px;
 .scanned-item__price {
   font-size: 12px;
   font-weight: 700;
-  color: $accent;
 }
 
 // ─── Qty controls inside scanned panel ───────────────────────────────────────
@@ -301,14 +300,19 @@ $radius-card: 12px;
     background: $primary;
     color: #fff;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: darken($primary, 8%);
       transform: scale(1.08);
     }
   }
 
-  &:active {
+  &:active:not(:disabled) {
     transform: scale(0.95);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
   }
 }
 
@@ -348,6 +352,24 @@ $radius-card: 12px;
   font-size: 16px;
   font-weight: 800;
   color: $primary;
+}
+
+.scanned-panel__balance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: $text-muted;
+}
+
+.scanned-panel__balance-value {
+  font-weight: 800;
+  color: $success;
+}
+
+.scanned-panel__balance--zero .scanned-panel__balance-value {
+  color: $danger;
 }
 
 .scanned-panel__actions {
@@ -528,6 +550,12 @@ $radius-card: 12px;
     cursor: not-allowed;
   }
 
+  &--insufficient {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: $danger !important;
+  }
+
   &--skeleton {
     pointer-events: none;
   }
@@ -609,6 +637,22 @@ $radius-card: 12px;
     font-size: 11px;
     font-weight: 600;
     color: $text-muted;
+  }
+}
+
+.product-card__insufficient-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+
+  span {
+    font-size: 11px;
+    font-weight: 700;
+    color: $danger;
   }
 }
 

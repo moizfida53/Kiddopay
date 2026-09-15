@@ -18,7 +18,19 @@ namespace KiddoPay.BLL.Services
         // ──────────────────────────────────────────────────────────────────────
         public async Task<PreOrderDTO> GetActivePreOrderForStudent(Guid studentId)
         {
-            var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
+            // Mirrors StudentService.GetTodaysActivePreOrder()'s date-range/status
+            // filtering: without it, this fetch matched EVERY pre-order the student
+            // has ever had (any status, any date) and, with no <order> clause either,
+            // Dataverse's default ordering kept returning the OLDEST one forever once
+            // a second pre-order existed for the same student -- the dashboard was
+            // stuck showing "preorder" even after "preorder_2" was created and made
+            // Active for today. Restrict to today (Kuwait, UTC+3, no DST) and
+            // Active/PartiallyFulfilled, and order by scheduled date descending so the
+            // most relevant match wins even if more than one somehow still qualifies.
+            var kuwaitOffset    = TimeSpan.FromHours(3);
+            var todayKuwaitDate = (DateTime.UtcNow + kuwaitOffset).Date;
+            var rangeStartUtc   = (todayKuwaitDate - kuwaitOffset).ToString("s");
+            var rangeEndUtc     = (todayKuwaitDate.AddDays(1) - kuwaitOffset).ToString("s");
 
             var fetch = $@"
 <fetch top='1'>
@@ -31,8 +43,16 @@ namespace KiddoPay.BLL.Services
     <attribute name='blser_totalfulfilled' />
     <attribute name='blser_student'        />
     <filter>
-      <condition attribute='blser_student' operator='eq' value='{studentId}'  />
+      <condition attribute='blser_student'       operator='eq' value='{studentId}'     />
+      <condition attribute='blser_scheduleddate' operator='ge' value='{rangeStartUtc}' />
+      <condition attribute='blser_scheduleddate' operator='lt' value='{rangeEndUtc}'   />
+      <condition attribute='statecode'           operator='eq' value='0'               />
+      <filter type='or'>
+        <condition attribute='blser_preorderstatus' operator='eq' value='550220000' />
+        <condition attribute='blser_preorderstatus' operator='eq' value='550220001' />
+      </filter>
     </filter>
+    <order attribute='blser_scheduleddate' descending='true' />
     <link-entity name='contact' from='contactid' to='blser_student'
                  alias='stu' link-type='outer'>
       <attribute name='fullname' />

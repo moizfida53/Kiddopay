@@ -7,13 +7,22 @@ namespace Kiddopay.Extensions
 {
     public static class CRMConnectionExtension
     {
-        public static readonly String CRMEnvironmentTarget = EnvironmentsNames.Development;
-
-        public static IServiceCollection ServiceAndBaseRepository(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection ServiceAndBaseRepository(
+            this IServiceCollection services, IConfiguration config, string aspNetEnvironmentName)
         {
-            var serviceURL = config[$"Environments:{CRMEnvironmentTarget}:ServiceURL"] ?? "";
-            var clientId = config[$"Environments:{CRMEnvironmentTarget}:ClientId"] ?? "";
-            var clientSecret =config[$"Environments:{CRMEnvironmentTarget}:ClientSecret"] ?? "";
+            // Driven by the ASP.NET Core hosting environment (ASPNETCORE_ENVIRONMENT / the
+            // --environment flag) instead of a compiled constant, so a Production build can
+            // no longer silently connect to the Development Dataverse environment.
+            var crmEnvironmentTarget = aspNetEnvironmentName switch
+            {
+                "Production" => EnvironmentsNames.Production,
+                "Staging"    => EnvironmentsNames.SandBox,
+                _            => EnvironmentsNames.Development,
+            };
+
+            var serviceURL = config[$"Environments:{crmEnvironmentTarget}:ServiceURL"] ?? "";
+            var clientId = config[$"Environments:{crmEnvironmentTarget}:ClientId"] ?? "";
+            var clientSecret =config[$"Environments:{crmEnvironmentTarget}:ClientSecret"] ?? "";
 
             var service = ServiceManager.GetService(serviceURL, clientId, clientSecret);
 
