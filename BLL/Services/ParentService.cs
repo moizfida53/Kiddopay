@@ -2,6 +2,7 @@ using Kiddopay.BLL.DTOs;
 using Kiddopay.BLL.Interfaces;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+using ITokenService = Kiddopay.BLL.Interfaces.ITokenService;
 using System.Security.Cryptography;
 
 namespace KiddoPay.BLL.Services

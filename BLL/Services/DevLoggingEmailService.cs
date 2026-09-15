@@ -1,4 +1,4 @@
-using KiddoPay.BLL.Interfaces;
+using Kiddopay.BLL.Interfaces;
 
 namespace KiddoPay.BLL.Services
 {

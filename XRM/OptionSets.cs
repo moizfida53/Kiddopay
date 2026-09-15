@@ -998,6 +998,19 @@ namespace CrmEarlyBound
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
+	public enum blser_OTPPurpose
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("Forgot Password", 1)]
+		ForgotPassword = 550220001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("Registration", 0)]
+		Registration = 550220000,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
 	public enum blser_Parent_StatusCode
 	{
 		
@@ -2134,6 +2147,19 @@ namespace CrmEarlyBound
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
+	public enum blser_devicetoken_blser_Platform
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("Android", 0)]
+		Android = 550220000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		[OptionSetMetadataAttribute("iOS", 1)]
+		iOS = 550220001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
 	public enum card_Sizes
 	{
 		
@@ -2287,18 +2313,5 @@ namespace CrmEarlyBound
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		[OptionSetMetadataAttribute("Link article and send article content", 3, "#0000ff")]
 		Linkarticleandsendarticlecontent = 3,
-	}
-	
-	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum blser_devicetoken_blser_Platform
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		[OptionSetMetadataAttribute("Android", 0)]
-		Android = 550220000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		[OptionSetMetadataAttribute("iOS", 1)]
-		iOS = 550220001,
 	}
 }

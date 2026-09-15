@@ -15307,6 +15307,8 @@ namespace CrmEarlyBound
 		{
 		}
 		
+		public const string AlternateKeys = "blser_email";
+		
 		public const string EntityLogicalName = "blser_parent";
 		
 		public const string EntitySchemaName = "blser_Parent";
@@ -15424,6 +15426,26 @@ namespace CrmEarlyBound
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_emailverified")]
+		public System.Nullable<bool> blser_EmailVerified
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("blser_emailverified");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_EmailVerified");
+				this.SetAttributeValue("blser_emailverified", value);
+				this.OnPropertyChanged("blser_EmailVerified");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_isactive")]
 		public System.Nullable<bool> blser_IsActive
 		{
@@ -15478,6 +15500,86 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("blser_Name");
 				this.SetAttributeValue("blser_name", value);
 				this.OnPropertyChanged("blser_Name");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_otpattempts")]
+		public System.Nullable<int> blser_OTPAttempts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("blser_otpattempts");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_OTPAttempts");
+				this.SetAttributeValue("blser_otpattempts", value);
+				this.OnPropertyChanged("blser_OTPAttempts");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_otpcode")]
+		public string blser_OTPCode
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("blser_otpcode");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_OTPCode");
+				this.SetAttributeValue("blser_otpcode", value);
+				this.OnPropertyChanged("blser_OTPCode");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_otpexpiresat")]
+		public System.Nullable<System.DateTime> blser_OTPExpiresAt
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("blser_otpexpiresat");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_OTPExpiresAt");
+				this.SetAttributeValue("blser_otpexpiresat", value);
+				this.OnPropertyChanged("blser_OTPExpiresAt");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_otppurpose")]
+		public virtual blser_OTPPurpose? blser_OTPPurpose
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return ((blser_OTPPurpose?)(EntityOptionSetEnum.GetEnum(this, "blser_otppurpose")));
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_OTPPurpose");
+				this.SetAttributeValue("blser_otppurpose", value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null);
+				this.OnPropertyChanged("blser_OTPPurpose");
 			}
 		}
 		
@@ -15561,6 +15663,26 @@ namespace CrmEarlyBound
 				this.OnPropertyChanging("blser_ParentWallet");
 				this.SetAttributeValue("blser_parentwallet", value);
 				this.OnPropertyChanged("blser_ParentWallet");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("blser_passwordhash")]
+		public string blser_PasswordHash
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("blser_passwordhash");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("blser_PasswordHash");
+				this.SetAttributeValue("blser_passwordhash", value);
+				this.OnPropertyChanged("blser_PasswordHash");
 			}
 		}
 		

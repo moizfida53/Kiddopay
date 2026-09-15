@@ -1,0 +1,26 @@
+# Build output -- rebuilt fresh inside the image
+bin/
+obj/
+**/bin/
+**/obj/
+
+# Angular -- node_modules and dist are rebuilt fresh inside the image by the
+# PublishRunWebpack MSBuild target
+ClientApp/node_modules/
+ClientApp/dist/
+
+# Secrets -- intentionally never baked into the image. Every setting the app
+# needs is supplied as a Render environment variable instead (see the
+# hosting guide, Section 2) -- same reason these are already in .gitignore.
+appsettings.json
+appsettings.Development.json
+appsettings.*.json
+KIDDOPAY SECRETS.txt
+firebase-service-account.json
+
+# Misc
+.git/
+.vs/
+*.user
+*.docx
+*.xlsx
